@@ -1,0 +1,300 @@
+/* HEADER (hellblauer Bereich oben) */
+.header {
+  background: #dbe6f1;
+  height: 220px;
+  position: relative;
+}
+
+
+/* Bild Position (mittig + halb unten) */
+.image-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+}
+
+
+
+
+/* Rundes Bild */
+.dog-img {
+  width: 120px;
+  border-radius: 50%;
+  object-fit: cover;  
+  display: block;
+  margin: 20px auto;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.dog-img:hover {
+  opacity: 0.8;
+}
+
+
+.info {
+  text-align: center;  
+  margin-top: 80px;    
+}
+
+
+.info h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+
+/* Button bearbeiten*/
+
+.edit-btn {
+  width: 80%;
+  display: block;
+  margin: 20px auto;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  background: #e0e0e0;
+  font-size: 16px;
+}
+
+
+
+/*Kacheln*/
+.note-text {
+  max-width: 340px;
+  margin: 15px auto 25px;
+  color: #7b7b8a;
+  font-size: 15px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.info-cards {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 25px auto;
+  flex-wrap: wrap;
+}
+
+.info-card {
+  width: 95px;
+  height: 75px;
+  border-radius: 16px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 14px;
+}
+
+.info-card strong {
+  font-size: 16px;
+  font-weight: bold;
+
+}
+
+.info-card span {
+  margin-top: 4px;
+  color: #666;
+  font-size: 13px;
+}
+
+.green-card {
+  background-color: #dff3c8;
+}
+
+.yellow-card {
+  background-color: #fff0c4;
+}
+
+.blue-card {
+  background-color: #cce8ff;
+}
+
+.purple-card {
+  background-color: #eadcff;
+}
+
+/*Location*/
+.location-actions {
+  width: 80%;
+  margin: 20px auto;
+  display: flex;
+  gap: 12px;
+}
+
+.location-btn {
+  flex: 1;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.whatsapp-btn {
+  background-color: #22c55e;
+}
+
+.sms-btn {
+  background-color: #4aa3ff;
+}
+
+.send-location-box {
+  width: 80%;
+  margin: 25px auto;
+}
+
+.send-location-main {
+  width: 100%;
+  margin: 0;
+  padding: 15px 18px;
+  border: none;
+  border-radius: 14px;
+  background: #4aa3ff;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.send-icon {
+  border-left: 1px solid rgba(255,255,255,0.7);
+  padding-left: 16px;
+}
+
+.send-options {
+  display: none;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.send-options.show {
+  display: flex;
+}
+
+.option {
+  flex: 1;
+  margin: 0;
+  padding: 13px;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.whatsapp-option {
+  background: #22c55e;
+}
+
+.sms-option {
+  background: #4aa3ff;
+}
+
+
+/*KOntakt*/
+.owner-contact-box {
+  width: 80%;
+  margin: 25px auto;
+}
+
+.owner-card {
+  background: #f1f7ff;
+  border-radius: 18px;
+  padding: 10px 12px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+
+.owner-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #4aa3ff;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.owner-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.owner-info strong {
+  font-size: 15px;
+  color: #111827;
+  font-weight: bold;
+  line-height: 1.1;
+}
+
+.owner-info span {
+  margin-top: 3px;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.owner-call-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: #22c55e;
+  color: white;
+  text-decoration: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 26px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+
+/*QR-Code*/
+.qr-section {
+  width: 80%;
+  margin: 30px auto;
+  text-align: center;
+  background: white;
+  border-radius: 18px;
+  padding: 18px;
+}
+
+.qr-section h3 {
+  margin-top: 0;
+}
+
+.qr-section p {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+#qrcode {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}

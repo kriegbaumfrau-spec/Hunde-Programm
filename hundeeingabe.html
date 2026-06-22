@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Pet Profile</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <button onclick="goBack()">← Zurück</button>
+<div class="container">
+
+  <h2>Mein Haustier</h2>
+
+  
+<div class="image-wrapper">
+
+  <img id="dogImage" src="tier-icon.png" class="dog-img">
+
+  <div class="camera-icon">
+    <img src="camera-icon.png">
+  </div>
+
+</div>
+
+<input type="file" id="imageInput" style="display:none;">
+
+
+  <!-- Eingabefelder -->
+  <div class="form-box">
+
+  <!-- Name -->
+  <div class="field"> 
+    <label>Name</label>
+    <input id="name" placeholder="z.B. Bella">
+  </div>
+
+ <!-- Tierart -->
+<div class="field">
+  <label>Tierart</label> 
+  
+  <select id="species"> 
+    <option value="">Bitte wählen</option>
+    <option value="dog">Hund</option> 
+    <option value="cat">Katze</option>
+    <option value="other">Sonstige</option>
+  </select>
+</div>
+
+<!-- Rasse -->
+  <div class="field">
+    <label>Rasse</label>
+    <input id="breed" placeholder="z.B. Labrador">
+  </div>
+
+ <!-- Geschlecht -->
+<div class="field">
+  <label>Geschlecht</label>
+  
+  <select id="gender">
+    <option value="male">Männlich</option>
+    <option value="female">Weiblich</option>
+  </select>
+</div>
+
+  <!-- Geburtstag -->
+  <div class="field">
+    <label>Geburtstag</label>
+    <input type="date" id="birthday">
+  </div>
+
+ <!-- Kastriert/sterilisiert -->
+<div class="field"> 
+  <label>Kastriert/sterilisiert</label> 
+  <select id="kastriert">  
+    <option value="ja">Ja</option> 
+    <option value="nein">Nein</option>
+  </select>
+</div>  
+
+  <!-- Gewicht -->
+  <div class="field">
+    <label>Gewicht (kg)</label>
+    <input id="weight" placeholder="z.B. 10">
+  </div>
+
+  <!-- Chip-Nummer -->
+   <div class="field">
+    <label>Chip-Nummer</label>
+    <input id="chipNumber" placeholder="z.B. 123456789">
+  </div>
+
+  <!-- Notiz -->
+  <div class="field">
+    <label>Weitere  Informationen</label>
+    <textarea id="note" placeholder="z.B. Medikamente"></textarea>
+  </div>
+
+<div class="contacts-section">
+
+  <!-- Liste -->
+  <div id="contactList"></div>
+
+  <!-- Eingabeformular (erst versteckt) -->
+  <div id="addForm" class="add-form" style="display:none;">
+    <input id="newName" placeholder="Name">
+    <input id="newPhone" placeholder="Telefonnummer">
+    <button onclick="saveContact()">Hinzufügen</button>
+  </div>
+
+  <!-- Add Button -->
+  <div class="add-contact" onclick="addContact()">
+    <span>Kontaktperson hinzufügen</span>
+    <span class="plus">+</span>
+  </div>
+
+</div>
+
+
+</div>
+
+  <button onclick="saveAndGo()" class="save">Speichern</button>
+  <button onclick="goBack()" class="cancel">Zurück</button>
+
+</div>
+
+
+<script>
+function goBack() {
+  window.location.href = "index.html";
+}
+</script>
+
+<script src="script.js"></script>
+</body>
+</html>

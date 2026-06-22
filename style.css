@@ -1,0 +1,235 @@
+/* 🔹 Grundlayout */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial;
+  background-color: #f5f6f8;
+}
+
+/* 🔹 Container (Handy-Look) */
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h2 {
+    text-align: center;
+}
+
+/*🔹 Profilbild */
+.dog-img {
+  width: 120px;
+  border-radius: 50%;
+  display: block;
+  margin: 20px auto;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.dog-img:hover {
+  opacity: 0.8;
+}
+
+/* 🔹 Eingabefelder */
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 18px;
+  border-radius: 30px;
+  border: 1px solid #dcdcdc;
+  background-color: white;
+  color: black;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+/* 🔹 Labels */
+label {
+  display: block;
+  margin: 15px 0 5px;
+  color: #8c8c8c;
+  font-size: 14px;
+}
+
+/* 🔹 Abstand zwischen Feldern */
+.field {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* 🔹 Buttons */
+button {
+  width: 80%;
+  padding: 12px;
+  margin: 10px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.save {
+  background-color: #3a86ff;
+  color: white;
+}
+
+.cancel {
+  background-color: #222;
+  color: white;
+}
+
+/* 🔹 Datum Box */
+.date-box {
+  display: inline-block;
+  background: #eef0f3;
+}
+
+/* 🔹 Kamera Icon im Bild */
+.image-wrapper {
+  position: relative;  
+  width: 120px;
+  margin: 20px auto;
+}
+
+.dog-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: block;
+}
+
+.camera-icon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+
+  width: 40px;
+  height: 40px;
+
+  background: #e7e8ec;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.camera-icon img {
+  width: 42px;
+  height: 42px;
+}
+
+.camera-icon:hover {
+  transform: scale(1.1);
+}
+
+
+.contacts-section {
+  margin-top: 30px;
+}
+
+/* einzelne Kontaktkarte */
+.contact-card {
+  background: #eef2f7;
+  border-radius: 20px;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* linke Seite */
+.contact-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-info span:first-child {
+  font-weight: bold;
+}
+
+.contact-info span:last-child {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* Telefon-Icon */
+.call-btn {
+  background: #22c55e;
+  color: white;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+    }
+
+    /* Add Button */
+    .add-contact {
+    margin-top: 15px;
+    background: #e7e8ec;
+    border-radius: 20px;
+    padding: 15px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    cursor: pointer;
+    }
+
+    .plus {
+     font-size: 20px;
+     font-weight: bold;
+    }
+
+    .actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.delete-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background: #dc2626;
+}
+
+
+.cards {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0;
+}
+
+.card {
+  background: #e3f2fd;
+  border-radius: 15px;
+  padding: 15px;
+  width: 90px;
+  text-align: center;
+}
+
+.card p {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.card span {
+  font-size: 12px;
+  color: gray;
+}

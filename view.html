@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Mein Haustier</title>
+ 
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="view.css">
+
+</head>
+
+<body>
+
+
+<div class="header">
+
+  <div class="image-wrapper">
+    <img id="imageOutput" class="dog-img" src="tier-icon.png">
+  </div>
+
+</div>
+
+
+<div class="info">
+  <h1 id="nameOutput"></h1>
+  <p id="breedOutput"></p>
+
+  <p id="noteOutput" class="note-text"></p>
+
+  <div class="info-cards">
+    <div class="info-card green-card">
+      <strong id="weightOutput"></strong>
+      <span>Gewicht</span>
+    </div>
+
+    <div class="info-card yellow-card">
+      <strong id="genderOutput"></strong>
+      <span>Geschlecht</span>
+    </div>
+
+    <div class="info-card blue-card">
+      <strong id="ageOutput"></strong>
+      <span>Alter</span>
+    </div>
+
+    <div class="info-card purple-card">
+    <strong id="kastriertCardOutput"></strong>
+    <span>Status</span>
+    </div>
+
+  </div>
+</div>
+
+<!--Standort an Besitzer senden --> 
+<div class="send-location-box">
+  <button class="send-location-main" onclick="toggleSendOptions()">
+    <span>Standort an Besitzer senden</span>
+    <span class="send-icon">📍</span>
+  </button>
+
+  <div id="sendOptions" class="send-options">
+    <button onclick="sendLocationWhatsApp()" class="option whatsapp-option">
+      Per WhatsApp
+    </button>
+
+    <button onclick="sendLocationSMS()" class="option sms-option">
+      Per SMS
+    </button>
+  </div>
+</div>
+
+<div class="owner-contact-box" id="ownerContactBox"></div>
+
+
+<div class="qr-section">
+  <h3>Finder QR-Code</h3>
+  <p>Scanne diesen Code, um die Finder-Seite zu öffnen.</p>
+  <div id="qrcode"></div>
+</div>
+
+<!--BUTTON bearbeiten -->
+<button onclick="goToEdit()" class="edit-btn">Bearbeiten</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="view.js"></script>
+
+
+</body>
+</html>
