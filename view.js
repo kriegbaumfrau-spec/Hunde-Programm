@@ -238,8 +238,10 @@ function createFinderQRCode() {
   params.set("contactName", contact.name || "");
   params.set("contactPhone", contact.phone || "");
 
-  let finderLink = "finder.html?" + params.toString();
-
+  let finderLink =
+  "https://kriegbaumfrau-spec.github.io/Hunde-Programm/finder.html?" +
+  params.toString();
+  
   let qrBox = document.getElementById("qrcode");
 
   if (!qrBox) {
