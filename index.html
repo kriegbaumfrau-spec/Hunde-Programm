@@ -1,0 +1,17 @@
+<h1>Mein Haustier</h1>
+
+<div onclick="goToView()" class="pet-card">
+  <span id="petName"></span>
+</div>
+
+<script>
+let dog = JSON.parse(localStorage.getItem("dog"));
+
+if (dog) {
+  document.getElementById("petName").innerText = dog.name;
+}
+
+function goToView() {
+  window.location.href = "view.html";
+}
+</script>
