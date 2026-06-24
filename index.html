@@ -46,7 +46,7 @@
       </div>
 
       <div class="hero-image-box">
-        <img src="Hintergrundbild.png" alt="Haustiere mit QR-Code" class="hero-image">
+        <img src="hero-haustiere.png" alt="Haustiere mit QR-Code" class="hero-image">
       </div>
     </section>
 
@@ -55,53 +55,82 @@
     <section class="pets-section">
       <h2>Meine Haustiere</h2>
 
-      <div id="petCards" class="pet-grid">
-        <!-- Karten werden über index.js eingefügt -->
+      <div class="pet-grid">
+
+        <!-- Echtes Profil: Mailo -->
+        <div class="pet-card">
+          <div class="pet-top">
+            <img src="Mailo.jpg" alt="Mailo" class="pet-img">
+
+            <div class="pet-info">
+              <h3>Mailo</h3>
+              <p>Hund · Kleinpudel</p>
+              <p>1 Jahr</p>
+              <span class="badge">Männlich</span>
+            </div>
+          </div>
+
+          <div class="pet-actions">
+            <a href="view.html">Profil ansehen</a>
+            <a href="hundeeingabe.html">Bearbeiten</a>
+            <a href="view.html#qrcode">QR-Code</a>
+            <a href="finder.html?name=Mailo&breed=Kleinpudel&note=allergie+gegen+Huhn&weight=8&gender=male&birthday=2024-09-11&kastriert=ja&contactName=Nele&contactPhone=26546">
+              Finder-Seite
+            </a>
+          </div>
+        </div>
+
+
+        <!-- Dummy-Profil: Luna -->
+        <div class="pet-card dummy-card">
+          <div class="pet-top">
+            <img src="tier-icon.png" alt="Luna" class="pet-img">
+
+            <div class="pet-info">
+              <h3>Luna</h3>
+              <p>Katze · Europäisch Kurzhaar</p>
+              <p>2 Jahre</p>
+              <span class="badge female">Weiblich</span>
+            </div>
+          </div>
+
+          <div class="pet-actions">
+            <button onclick="alert('Dieses Profil ist nur ein Dummy-Beispiel.')">Profil ansehen</button>
+            <button onclick="alert('Dummy-Profile können nicht bearbeitet werden.')">Bearbeiten</button>
+            <button onclick="alert('Für Dummy-Profile gibt es keinen echten QR-Code.')">QR-Code</button>
+            <button onclick="alert('Die Finder-Seite ist nur für Mailo aktiv.')">Finder-Seite</button>
+          </div>
+        </div>
+
+
+        <!-- Dummy-Profil: Balu -->
+        <div class="pet-card dummy-card">
+          <div class="pet-top">
+            <img src="tier-icon.png" alt="Balu" class="pet-img">
+
+            <div class="pet-info">
+              <h3>Balu</h3>
+              <p>Hund · Labrador</p>
+              <p>3 Jahre</p>
+              <span class="badge">Männlich</span>
+            </div>
+          </div>
+
+          <div class="pet-actions">
+            <button onclick="alert('Dieses Profil ist nur ein Dummy-Beispiel.')">Profil ansehen</button>
+            <button onclick="alert('Dummy-Profile können nicht bearbeitet werden.')">Bearbeiten</button>
+            <button onclick="alert('Für Dummy-Profile gibt es keinen echten QR-Code.')">QR-Code</button>
+            <button onclick="alert('Die Finder-Seite ist nur für Mailo aktiv.')">Finder-Seite</button>
+          </div>
+        </div>
+
       </div>
     </section>
 
 
-    <!-- So funktioniert es -->
-    <section class="steps-section">
-      <h2>So funktioniert es</h2>
-
-      <div class="steps">
-        <div class="step">
-          <div class="step-number">1</div>
-          <div class="step-icon">👤</div>
-          <div>
-            <strong>Profil erstellen</strong>
-            <p>Lege ein Profil mit allen wichtigen Daten für dein Haustier an.</p>
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="step-number">2</div>
-          <div class="step-icon">▦</div>
-          <div>
-            <strong>QR-Code generieren</strong>
-            <p>Erzeuge einen persönlichen QR-Code für dein Haustier.</p>
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="step-number">3</div>
-          <div class="step-icon">📱</div>
-          <div>
-            <strong>QR-Code scannen</strong>
-            <p>Finder öffnen direkt die Finder-Seite mit allen wichtigen Infos.</p>
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="step-number">4</div>
-          <div class="step-icon">💬</div>
-          <div>
-            <strong>Kontakt aufnehmen</strong>
-            <p>Der Finder kann Standort senden oder direkt anrufen.</p>
-          </div>
-        </div>
-      </div>
+    <!-- So funktioniert es als Bild -->
+    <section class="steps-image-section">
+      <img src="so-funktioniert-es.png" alt="So funktioniert PetConnect" class="steps-image">
     </section>
 
 
@@ -113,6 +142,5 @@
 
   </div>
 
-  <script src="index.js"></script>
 </body>
 </html>
