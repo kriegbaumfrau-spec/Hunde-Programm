@@ -1,64 +1,44 @@
-
 let contacts = [];
 
-// ✅ ALLES BEIM LADEN INITIALISIEREN
-window.onload = function () {
 
+// Beim Laden der Seite alles vorbereiten
+window.onload = function () {
   let imageInput = document.getElementById("imageInput");
   let dogImage = document.getElementById("dogImage");
   let cameraIcon = document.querySelector(".camera-icon");
 
-  // ✅ Hundedaten laden
-  let savedDog = JSON.parse(localStorage.getItem("dog"));
+  loadDogData();
+  loadDogImage(dogImage);
+  loadContacts();
 
-  if (savedDog) {
-    document.getElementById("name").value = savedDog.name || "";
-    document.getElementById("species").value = savedDog.species || "";
-    document.getElementById("breed").value = savedDog.breed || "";
-    document.getElementById("gender").value = savedDog.gender || "";
-    document.getElementById("birthday").value = savedDog.birthday || "";
-    document.getElementById("kastriert").value = savedDog.kastriert || "";
-    document.getElementById("weight").value = savedDog.weight || "";
-    document.getElementById("chipNumber").value = savedDog.chipNumber || "";
-    document.getElementById("note").value = savedDog.note || "";
-
-    
-// ✅ Bild laden
-  let savedImage = localStorage.getItem("dogImage");
-  if (savedImage && dogImage) {
-    dogImage.src = savedImage;
-  }
-
-    
-// ✅ Kontakte laden
-let savedContacts = JSON.parse(localStorage.getItem("contacts"));
-
-if (savedContacts) {
-  contacts = savedContacts;
-  renderContacts();
-}
-
-  }
-
-  // ✅ Klick auf Bild öffnet Datei
+  // Klick auf Bild öffnet Datei-Auswahl
   if (dogImage && imageInput) {
-    dogImage.onclick = () => imageInput.click();
+    dogImage.onclick = function () {
+      imageInput.click();
+    };
   }
 
+  // Klick auf Kamera-Icon öffnet Datei-Auswahl
   if (cameraIcon && imageInput) {
-    cameraIcon.onclick = () => imageInput.click();
+    cameraIcon.onclick = function () {
+      imageInput.click();
+    };
   }
 
-  // ✅ Bild speichern
+  // Bild speichern
   if (imageInput) {
     imageInput.onchange = function () {
       let file = imageInput.files[0];
-      if (!file) return;
+
+      if (!file) {
+        return;
+      }
 
       let reader = new FileReader();
 
       reader.onload = function () {
         let imageData = reader.result;
+
         dogImage.src = imageData;
         localStorage.setItem("dogImage", imageData);
       };
@@ -66,14 +46,53 @@ if (savedContacts) {
       reader.readAsDataURL(file);
     };
   }
-
 };
 
 
-// ✅ Speichern Button (nur localStorage)
-function saveDog() {
-  console.log("Speichern gedrückt");
+// Hundedaten aus localStorage laden
+function loadDogData() {
+  let savedDog = JSON.parse(localStorage.getItem("dog"));
 
+  if (!savedDog) {
+    return;
+  }
+
+  document.getElementById("name").value = savedDog.name || "";
+  document.getElementById("species").value = savedDog.species || "";
+  document.getElementById("breed").value = savedDog.breed || "";
+  document.getElementById("gender").value = savedDog.gender || "";
+  document.getElementById("birthday").value = savedDog.birthday || "";
+  document.getElementById("kastriert").value = savedDog.kastriert || "";
+  document.getElementById("weight").value = savedDog.weight || "";
+  document.getElementById("chipNumber").value = savedDog.chipNumber || "";
+  document.getElementById("note").value = savedDog.note || "";
+}
+
+
+// Profilbild aus localStorage laden
+function loadDogImage(dogImage) {
+  let savedImage = localStorage.getItem("dogImage");
+
+  if (savedImage && dogImage) {
+    dogImage.src = savedImage;
+  }
+}
+
+
+// Kontakte aus localStorage laden
+function loadContacts() {
+  let savedContacts = JSON.parse(localStorage.getItem("contacts"));
+
+  if (savedContacts) {
+    contacts = savedContacts;
+  }
+
+  renderContacts();
+}
+
+
+// Hund speichern
+function saveDog() {
   let dog = {
     name: document.getElementById("name").value,
     species: document.getElementById("species").value,
@@ -90,66 +109,94 @@ function saveDog() {
 }
 
 
-// ✅ Speichern + zur View-Seite wechseln
+// Speichern und zur Profilseite wechseln
 function saveAndGo() {
-
   saveDog();
 
   window.location.href = "view.html";
 }
 
 
-// ✅ Kontakt hinzufügen (Form zeigen)
-function addContact() {
-  document.getElementById("addForm").style.display = "block";
+// Zurück zur Startseite
+function goBack() {
+  window.location.href = "index.html";
 }
 
 
-// ✅ Kontakt speichern
+// Kontaktformular anzeigen
+function addContact() {
+  let form = document.getElementById("addForm");
+
+  if (form) {
+    form.style.display = "block";
+  }
+}
+
+
+// Kontakt speichern
 function saveContact() {
-  let name = document.getElementById("newName").value;
-  let phone = document.getElementById("newPhone").value;
+  let name = document.getElementById("newName").value.trim();
+  let phone = document.getElementById("newPhone").value.trim();
 
-  if (!name || !phone) return;
+  if (!name || !phone) {
+    alert("Bitte Name und Telefonnummer eingeben.");
+    return;
+  }
 
-  let contact = { name, phone };
+  let contact = {
+    name: name,
+    phone: phone
+  };
 
   contacts.push(contact);
+
   localStorage.setItem("contacts", JSON.stringify(contacts));
 
-  renderContacts();
-
-  // reset
   document.getElementById("newName").value = "";
   document.getElementById("newPhone").value = "";
   document.getElementById("addForm").style.display = "none";
+
+  renderContacts();
 }
 
 
-// ✅ Kontakte anzeigen
+// Kontakte anzeigen
 function renderContacts() {
   let list = document.getElementById("contactList");
+
+  if (!list) {
+    return;
+  }
+
   list.innerHTML = "";
 
-  contacts.forEach((c, index) => {
+  contacts.forEach(function (contact, index) {
+    let firstLetter = contact.name.charAt(0).toUpperCase();
+
     list.innerHTML += `
       <div class="contact-card">
+
         <div class="contact-info">
-          <span>${c.name}</span>
-          <span>${c.phone}</span>
+          <div class="contact-avatar">${firstLetter}</div>
+
+          <div class="contact-text">
+            <strong>${contact.name}</strong>
+            <span>${contact.phone}</span>
+          </div>
         </div>
 
         <div class="actions">
-          <a href="tel:${c.phone}" class="call-btn">📞</a>
-          <button onclick="deleteContact(${index})" class="delete-btn">🗑️</button>
+          <a href="tel:${contact.phone}" class="call-btn">☎</a>
+          <button onclick="deleteContact(${index})" class="delete-btn">🗑</button>
         </div>
+
       </div>
     `;
   });
 }
 
 
-// ✅ Kontakt löschen
+// Kontakt löschen
 function deleteContact(index) {
   contacts.splice(index, 1);
 
