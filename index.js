@@ -12,11 +12,13 @@ function openQrModal() {
 
   let finderLink = createFinderLink();
 
-  new QRCode(qrBox, {
-    text: finderLink,
-    width: 220,
-    height: 220
-  });
+  setTimeout(function () {
+    new QRCode(qrBox, {
+      text: finderLink,
+      width: 220,
+      height: 220
+    });
+  }, 100);
 }
 
 
