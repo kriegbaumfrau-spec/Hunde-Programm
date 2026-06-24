@@ -358,7 +358,9 @@ footer {
 .steps-image-section {
   margin: 30px 45px 35px;
   padding: 0;
-  width: calc(100% - 90px);
+  background: transparent;
+  box-shadow: none;
+  border: none;
 }
 
 .steps-image {
@@ -366,5 +368,4 @@ footer {
   height: auto;
   display: block;
   border-radius: 18px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.04);
 }
