@@ -433,3 +433,41 @@ footer {
   justify-content: center;
   align-items: center;
 }
+
+#indexQrCode {
+  width: 240px;
+  min-height: 240px;
+  margin: 0 auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: white;
+}
+
+#indexQrCode canvas,
+#indexQrCode img {
+  width: 220px !important;
+  height: 220px !important;
+  display: block !important;
+}
+
+@media (max-width: 600px) {
+  .qr-modal-content {
+    width: 320px;
+    max-width: 92%;
+    padding: 26px 20px;
+  }
+
+  #indexQrCode {
+    width: 220px;
+    min-height: 220px;
+  }
+
+  #indexQrCode canvas,
+  #indexQrCode img {
+    width: 200px !important;
+    height: 200px !important;
+  }
+}
