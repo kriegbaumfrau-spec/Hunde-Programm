@@ -71,7 +71,7 @@
           <div class="pet-actions">
             <a href="view.html">Profil ansehen</a>
             <a href="hundeeingabe.html">Bearbeiten</a>
-            <a href="view.html#qrcode">QR-Code</a>
+            <button onclick="openQrModal()">QR-Code</button>
             <a href="finder.html?name=Mailo&breed=Kleinpudel&note=allergie+gegen+Huhn&weight=8&gender=male&birthday=2024-09-11&kastriert=ja&contactName=Nele&contactPhone=26546">
               Finder-Seite
             </a>
@@ -139,6 +139,19 @@
     </footer>
 
   </div>
+<!-- QR-Code Popup -->
+<div id="qrModal" class="qr-modal">
+  <div class="qr-modal-content">
+    <button class="qr-close" onclick="closeQrModal()">×</button>
 
+    <h2>Finder QR-Code</h2>
+    <p>Scanne diesen Code, um die Finder-Seite zu öffnen.</p>
+
+    <div id="indexQrCode"></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="index.js"></script>
 </body>
 </html>
