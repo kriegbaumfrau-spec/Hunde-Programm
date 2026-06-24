@@ -1,17 +1,104 @@
-<h1>Mein Haustier</h1>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>PetConnect</title>
+  <link rel="stylesheet" href="index.css">
+</head>
 
-<div onclick="goToView()" class="pet-card">
-  <span id="petName"></span>
-</div>
+<body>
 
-<script>
-let dog = JSON.parse(localStorage.getItem("dog"));
+  <div class="page">
 
-if (dog) {
-  document.getElementById("petName").innerText = dog.name;
-}
+    <!-- Navigation -->
+    <header class="navbar">
+      <div class="logo">
+        <span class="logo-icon">🐾</span>
+        <div>
+          <h1>PetConnect</h1>
+          <p>Weil sie Familie sind.</p>
+        </div>
+      </div>
 
-function goToView() {
-  window.location.href = "view.html";
-}
-</script>
+      <nav>
+        <a class="active" href="index.html">Übersicht</a>
+        <a href="hundeeingabe.html">Neues Haustier</a>
+        <a href="#">Hilfe</a>
+        <a href="#">Über uns</a>
+      </nav>
+    </header>
+
+
+    <!-- Hero Bereich -->
+    <section class="hero">
+      <div class="hero-text">
+        <h2>Willkommen zurück!</h2>
+        <p>
+          Verwalte alle deine Haustierprofile an einem Ort.
+          Erstelle QR-Codes und hilf, dein Haustier sicher nach Hause zu bringen.
+        </p>
+
+        <button onclick="goToNewPet()" class="main-btn">
+          + Neues Haustier hinzufügen
+        </button>
+      </div>
+
+      <div class="hero-graphic">
+        <div class="qr-preview">▦</div>
+        <div class="animal-graphic">🐶 🐱</div>
+      </div>
+    </section>
+
+
+    <!-- Haustierkarten -->
+    <section class="pets-section">
+      <h2>Meine Haustiere</h2>
+
+      <div id="petCards" class="pet-grid">
+        <!-- Karten werden mit JavaScript eingefügt -->
+      </div>
+    </section>
+
+
+    <!-- Erklärung -->
+    <section class="steps-section">
+      <h2>So funktioniert es</h2>
+
+      <div class="steps">
+        <div class="step">
+          <span>1</span>
+          <strong>Profil erstellen</strong>
+          <p>Lege ein Profil mit allen wichtigen Daten an.</p>
+        </div>
+
+        <div class="step">
+          <span>2</span>
+          <strong>QR-Code generieren</strong>
+          <p>Erzeuge einen QR-Code für dein Haustier.</p>
+        </div>
+
+        <div class="step">
+          <span>3</span>
+          <strong>QR-Code scannen</strong>
+          <p>Finder öffnen direkt die Finder-Seite.</p>
+        </div>
+
+        <div class="step">
+          <span>4</span>
+          <strong>Kontakt aufnehmen</strong>
+          <p>Der Finder kann Standort senden oder anrufen.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <footer>
+      <strong>🐾 PetConnect</strong>
+      <span>© 2025 PetConnect</span>
+    </footer>
+
+  </div>
+
+  <script src="index.js"></script>
+</body>
+</html>
