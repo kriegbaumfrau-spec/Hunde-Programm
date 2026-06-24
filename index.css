@@ -255,19 +255,6 @@ nav a.active {
 }
 
 
-/* So funktioniert es als Bild */
-.steps-image-section {
-  margin: 30px 45px 35px;
-}
-
-.steps-image {
-  width: 100%;
-  display: block;
-  border-radius: 18px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.04);
-}
-
-
 /* Footer */
 footer {
   padding: 24px 45px;
