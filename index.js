@@ -12,13 +12,15 @@ function openQrModal() {
 
   let finderLink = createFinderLink();
 
-  setTimeout(function () {
-    new QRCode(qrBox, {
-      text: finderLink,
-      width: 220,
-      height: 220
-    });
-  }, 100);
+  let qrImage = document.createElement("img");
+  qrImage.src =
+    "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" +
+    encodeURIComponent(finderLink);
+
+  qrImage.alt = "Finder QR-Code";
+  qrImage.className = "qr-image";
+
+  qrBox.appendChild(qrImage);
 }
 
 
