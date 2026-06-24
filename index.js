@@ -2,22 +2,30 @@ function openQrModal() {
   let modal = document.getElementById("qrModal");
   let qrBox = document.getElementById("indexQrCode");
 
-  modal.style.display = "flex";
+  if (!modal || !qrBox) {
+    alert("QR-Popup wurde nicht gefunden.");
+    return;
+  }
+
+  modal.classList.add("show");
   qrBox.innerHTML = "";
 
   let finderLink = createFinderLink();
 
   new QRCode(qrBox, {
     text: finderLink,
-    width: 200,
-    height: 200
+    width: 220,
+    height: 220
   });
 }
 
 
 function closeQrModal() {
   let modal = document.getElementById("qrModal");
-  modal.style.display = "none";
+
+  if (modal) {
+    modal.classList.remove("show");
+  }
 }
 
 
