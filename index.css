@@ -11,18 +11,20 @@ body {
 
 .page {
   max-width: 1200px;
+  min-height: 100vh;
   margin: 0 auto;
   background: white;
-  min-height: 100vh;
 }
+
 
 /* Navigation */
 .navbar {
-  height: 80px;
+  height: 76px;
   padding: 0 45px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   background: white;
   box-shadow: 0 3px 12px rgba(0,0,0,0.06);
 }
@@ -30,7 +32,7 @@ body {
 .logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .logo-icon {
@@ -39,13 +41,14 @@ body {
 
 .logo h1 {
   margin: 0;
-  font-size: 26px;
+  font-size: 28px;
+  letter-spacing: 0.5px;
 }
 
 .logo p {
   margin: 2px 0 0;
   color: #6b7280;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 nav {
@@ -57,7 +60,7 @@ nav a {
   text-decoration: none;
   color: #111827;
   font-weight: bold;
-  padding: 28px 0;
+  padding: 27px 0;
 }
 
 nav a.active {
@@ -65,39 +68,50 @@ nav a.active {
   border-bottom: 4px solid #2563eb;
 }
 
+
 /* Hero */
 .hero {
+  min-height: 305px;
+  padding: 45px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 45px;
-  background: linear-gradient(90deg, #ffffff, #eaf4ff);
+
+  background: linear-gradient(90deg, #ffffff 0%, #eef6ff 100%);
 }
 
 .hero-text {
-  max-width: 520px;
+  max-width: 560px;
 }
 
-.hero h2 {
-  font-size: 40px;
+.hero-text h2 {
   margin: 0 0 20px;
+  font-size: 42px;
+  letter-spacing: 1px;
 }
 
-.hero p {
-  color: #374151;
+.hero-text p {
+  margin: 0;
+  max-width: 540px;
   font-size: 18px;
-  line-height: 1.5;
+  line-height: 1.55;
+  color: #374151;
 }
 
 .main-btn {
-  margin-top: 25px;
+  display: inline-block;
+  margin-top: 28px;
+  padding: 16px 30px;
+
   background: #2563eb;
   color: white;
-  border: none;
-  border-radius: 12px;
-  padding: 16px 28px;
+  text-decoration: none;
+
+  border-radius: 10px;
   font-size: 17px;
   font-weight: bold;
+
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
   cursor: pointer;
 }
 
@@ -105,41 +119,34 @@ nav a.active {
   background: #1d4ed8;
 }
 
-.hero-graphic {
-  min-width: 320px;
+.hero-image-box {
+  width: 360px;
   height: 190px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   background: #dbeafe;
-  border-radius: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 25px;
+  border-radius: 28px;
+  overflow: hidden;
 }
 
-.qr-preview {
-  width: 95px;
-  height: 95px;
-  background: white;
-  border-radius: 16px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 55px;
-  color: #111827;
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.animal-graphic {
-  font-size: 65px;
-}
 
 /* Haustiere */
 .pets-section {
-  padding: 35px 45px;
+  padding: 35px 45px 20px;
 }
 
 .pets-section h2 {
-  font-size: 26px;
-  margin-bottom: 20px;
+  font-size: 28px;
+  margin: 0 0 22px;
 }
 
 .pet-grid {
@@ -151,8 +158,9 @@ nav a.active {
 .pet-card {
   background: white;
   border: 1px solid #e5e7eb;
-  border-radius: 18px;
+  border-radius: 16px;
   padding: 18px;
+
   box-shadow: 0 5px 14px rgba(0,0,0,0.06);
 }
 
@@ -163,123 +171,189 @@ nav a.active {
 
 .pet-img {
   width: 135px;
-  height: 120px;
+  height: 125px;
   border-radius: 14px;
   object-fit: cover;
   background: #eef2f7;
 }
 
+.pet-info {
+  flex: 1;
+}
+
 .pet-info h3 {
-  margin: 5px 0;
-  font-size: 27px;
+  margin: 4px 0 8px;
+  font-size: 28px;
 }
 
 .pet-info p {
   margin: 6px 0;
   color: #4b5563;
+  font-size: 15px;
 }
 
 .badge {
   display: inline-block;
   margin-top: 8px;
   padding: 7px 12px;
+
   background: #dbeafe;
   color: #1d4ed8;
+
   border-radius: 9px;
   font-size: 14px;
   font-weight: bold;
 }
 
+.badge.female {
+  background: #ffe4ef;
+  color: #be185d;
+}
+
+.badge.dummy {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
 .pet-actions {
   margin-top: 18px;
+
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: 9px;
 }
 
 .pet-actions button {
+  min-height: 54px;
+  padding: 8px 6px;
+
   border: 1px solid #e5e7eb;
-  background: white;
   border-radius: 10px;
-  padding: 12px 6px;
-  cursor: pointer;
+
+  background: white;
+  color: #111827;
+
   font-weight: bold;
+  cursor: pointer;
 }
 
 .pet-actions button:hover {
   background: #f3f4f6;
 }
 
-/* Schritte */
+.pet-actions button.dummy-btn {
+  opacity: 0.55;
+}
+
+
+/* So funktioniert es */
 .steps-section {
-  margin: 0 45px 35px;
-  padding: 25px;
+  margin: 25px 45px 35px;
+  padding: 24px;
+
   background: #f8fbff;
-  border-radius: 18px;
   border: 1px solid #e5e7eb;
+  border-radius: 18px;
+
+  box-shadow: 0 4px 14px rgba(0,0,0,0.04);
 }
 
 .steps-section h2 {
-  margin-top: 0;
+  margin: 0 0 18px;
+  font-size: 24px;
 }
 
 .steps {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  gap: 18px;
 }
 
-.step span {
-  display: inline-flex;
+.step {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  position: relative;
+}
+
+.step-number {
   width: 28px;
   height: 28px;
+  min-width: 28px;
+
+  border-radius: 50%;
   background: #2563eb;
   color: white;
-  border-radius: 50%;
-  align-items: center;
+
+  display: flex;
   justify-content: center;
+  align-items: center;
+
   font-weight: bold;
-  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.step-icon {
+  font-size: 30px;
+  line-height: 1;
 }
 
 .step strong {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
+  font-size: 15px;
 }
 
 .step p {
   margin: 0;
   color: #6b7280;
   font-size: 14px;
+  line-height: 1.35;
 }
+
 
 /* Footer */
 footer {
-  padding: 25px 45px;
+  padding: 24px 45px;
+
   display: flex;
   justify-content: space-between;
+  align-items: center;
+
   color: #6b7280;
   border-top: 1px solid #e5e7eb;
 }
 
+
 /* Responsive */
-@media (max-width: 900px) {
+@media (max-width: 950px) {
   .navbar {
-    flex-direction: column;
     height: auto;
     padding: 20px;
+    flex-direction: column;
     gap: 15px;
   }
 
   nav {
-    gap: 18px;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 20px;
+  }
+
+  nav a {
+    padding: 10px 0;
   }
 
   .hero {
+    padding: 35px 25px;
     flex-direction: column;
     text-align: center;
+    gap: 28px;
+  }
+
+  .hero-image-box {
+    width: 100%;
+    max-width: 420px;
   }
 
   .pet-grid {
@@ -291,13 +365,13 @@ footer {
   }
 }
 
-@media (max-width: 550px) {
-  .hero h2 {
-    font-size: 30px;
+@media (max-width: 600px) {
+  .hero-text h2 {
+    font-size: 32px;
   }
 
-  .hero-graphic {
-    min-width: 100%;
+  .pets-section {
+    padding: 30px 20px;
   }
 
   .pet-top {
@@ -306,14 +380,23 @@ footer {
 
   .pet-img {
     width: 100%;
-    height: 180px;
+    height: 190px;
   }
 
   .pet-actions {
     grid-template-columns: 1fr 1fr;
   }
 
+  .steps-section {
+    margin: 20px;
+  }
+
   .steps {
     grid-template-columns: 1fr;
+  }
+
+  footer {
+    flex-direction: column;
+    gap: 10px;
   }
 }
