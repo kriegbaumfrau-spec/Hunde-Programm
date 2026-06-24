@@ -471,3 +471,22 @@ footer {
     height: 200px !important;
   }
 }
+
+.qr-image {
+  width: 220px;
+  height: 220px;
+  display: block;
+  margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+  .qr-image {
+    width: 200px;
+    height: 200px;
+  }
+
+  .qr-modal-content {
+    width: 320px;
+    min-height: 320px;
+  }
+}
