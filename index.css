@@ -217,18 +217,22 @@ nav a.active {
 
 
 /* Karten-Buttons */
+/* Karten-Buttons */
 .pet-actions {
   margin-top: 18px;
 
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 9px;
+  gap: 10px;
+
+  width: 100%;
 }
 
 .pet-actions a,
 .pet-actions button {
-  min-height: 54px;
-  padding: 8px 6px;
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 6px;
 
   border: 1px solid #e5e7eb;
   border-radius: 10px;
@@ -247,13 +251,14 @@ nav a.active {
 
   cursor: pointer;
   font-family: Arial, sans-serif;
+
+  white-space: nowrap;
 }
 
 .pet-actions a:hover,
 .pet-actions button:hover {
   background: #f3f4f6;
 }
-
 
 /* Footer */
 footer {
