@@ -1,319 +1,279 @@
-* {
-  box-sizing: border-box;
+window.onload = function () {
+  renderPets();
+};
+
+
+// Haustierkarten anzeigen
+function renderPets() {
+  let petCards = document.getElementById("petCards");
+
+  let savedDog = JSON.parse(localStorage.getItem("dog"));
+  let savedImage = localStorage.getItem("dogImage");
+
+  let pets = [
+    {
+      name: savedDog?.name || "Mailo",
+      species: savedDog?.species || "dog",
+      breed: savedDog?.breed || "Kleinpudel",
+      gender: savedDog?.gender || "male",
+      birthday: savedDog?.birthday || "2024-09-11",
+      image: savedImage || "Mailo.jpg",
+      real: true
+    },
+
+    {
+      name: "Luna",
+      species: "cat",
+      breed: "Europäisch Kurzhaar",
+      gender: "female",
+      birthday: "2022-05-12",
+      image: "tier-icon.png",
+      real: false
+    },
+
+    {
+      name: "Balu",
+      species: "dog",
+      breed: "Labrador",
+      gender: "male",
+      birthday: "2021-03-20",
+      image: "tier-icon.png",
+      real: false
+    }
+  ];
+
+  petCards.innerHTML = "";
+
+  pets.forEach(function(pet) {
+    let genderClass = "";
+
+    if (pet.gender === "female") {
+      genderClass = "female";
+    }
+
+    if (!pet.real) {
+      genderClass += " dummy";
+    }
+
+    petCards.innerHTML += `
+      <div class="pet-card">
+
+        <div class="pet-top">
+          <img src="${pet.image}" alt="${pet.name}" class="pet-img">
+
+          <div class="pet-info">
+            <h3>${pet.name}</h3>
+            <p>${formatSpecies(pet.species)} · ${pet.breed}</p>
+            <p>${calculateAge(pet.birthday)}</p>
+            <span class="badge ${genderClass}">
+              ${formatGender(pet.gender)}
+            </span>
+          </div>
+        </div>
+
+        <div class="pet-actions">
+          <button onclick="openProfile(${pet.real})">
+            Profil ansehen
+          </button>
+
+          <button onclick="editPet(${pet.real})">
+            Bearbeiten
+          </button>
+
+          <button onclick="openQRCode(${pet.real})">
+            QR-Code
+          </button>
+
+          <button onclick="openFinder(${pet.real})">
+            Finder-Seite
+          </button>
+        </div>
+
+      </div>
+    `;
+  });
 }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f7fb;
-  color: #111827;
-}
 
-.page {
-  max-width: 1200px;
-  margin: 0 auto;
-  background: white;
-  min-height: 100vh;
-}
+// Mailo-Daten vorbereiten, falls noch nichts im Browser gespeichert ist
+function ensureMailoData() {
+  let dog = JSON.parse(localStorage.getItem("dog"));
+  let contacts = JSON.parse(localStorage.getItem("contacts"));
 
-/* Navigation */
-.navbar {
-  height: 80px;
-  padding: 0 45px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: white;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.06);
-}
+  if (!dog) {
+    dog = {
+      name: "Mailo",
+      species: "dog",
+      breed: "Kleinpudel",
+      gender: "male",
+      birthday: "2024-09-11",
+      kastriert: "ja",
+      weight: "8",
+      chipNumber: "689497643",
+      note: "allergie gegen Huhn"
+    };
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.logo-icon {
-  font-size: 34px;
-}
-
-.logo h1 {
-  margin: 0;
-  font-size: 26px;
-}
-
-.logo p {
-  margin: 2px 0 0;
-  color: #6b7280;
-  font-size: 13px;
-}
-
-nav {
-  display: flex;
-  gap: 35px;
-}
-
-nav a {
-  text-decoration: none;
-  color: #111827;
-  font-weight: bold;
-  padding: 28px 0;
-}
-
-nav a.active {
-  color: #2563eb;
-  border-bottom: 4px solid #2563eb;
-}
-
-/* Hero */
-.hero {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 45px;
-  background: linear-gradient(90deg, #ffffff, #eaf4ff);
-}
-
-.hero-text {
-  max-width: 520px;
-}
-
-.hero h2 {
-  font-size: 40px;
-  margin: 0 0 20px;
-}
-
-.hero p {
-  color: #374151;
-  font-size: 18px;
-  line-height: 1.5;
-}
-
-.main-btn {
-  margin-top: 25px;
-  background: #2563eb;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  padding: 16px 28px;
-  font-size: 17px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.main-btn:hover {
-  background: #1d4ed8;
-}
-
-.hero-graphic {
-  min-width: 320px;
-  height: 190px;
-  background: #dbeafe;
-  border-radius: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 25px;
-}
-
-.qr-preview {
-  width: 95px;
-  height: 95px;
-  background: white;
-  border-radius: 16px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 55px;
-  color: #111827;
-}
-
-.animal-graphic {
-  font-size: 65px;
-}
-
-/* Haustiere */
-.pets-section {
-  padding: 35px 45px;
-}
-
-.pets-section h2 {
-  font-size: 26px;
-  margin-bottom: 20px;
-}
-
-.pet-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
-
-.pet-card {
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 18px;
-  padding: 18px;
-  box-shadow: 0 5px 14px rgba(0,0,0,0.06);
-}
-
-.pet-top {
-  display: flex;
-  gap: 18px;
-}
-
-.pet-img {
-  width: 135px;
-  height: 120px;
-  border-radius: 14px;
-  object-fit: cover;
-  background: #eef2f7;
-}
-
-.pet-info h3 {
-  margin: 5px 0;
-  font-size: 27px;
-}
-
-.pet-info p {
-  margin: 6px 0;
-  color: #4b5563;
-}
-
-.badge {
-  display: inline-block;
-  margin-top: 8px;
-  padding: 7px 12px;
-  background: #dbeafe;
-  color: #1d4ed8;
-  border-radius: 9px;
-  font-size: 14px;
-  font-weight: bold;
-}
-
-.pet-actions {
-  margin-top: 18px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-}
-
-.pet-actions button {
-  border: 1px solid #e5e7eb;
-  background: white;
-  border-radius: 10px;
-  padding: 12px 6px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.pet-actions button:hover {
-  background: #f3f4f6;
-}
-
-/* Schritte */
-.steps-section {
-  margin: 0 45px 35px;
-  padding: 25px;
-  background: #f8fbff;
-  border-radius: 18px;
-  border: 1px solid #e5e7eb;
-}
-
-.steps-section h2 {
-  margin-top: 0;
-}
-
-.steps {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-}
-
-.step span {
-  display: inline-flex;
-  width: 28px;
-  height: 28px;
-  background: #2563eb;
-  color: white;
-  border-radius: 50%;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.step strong {
-  display: block;
-  margin-bottom: 6px;
-}
-
-.step p {
-  margin: 0;
-  color: #6b7280;
-  font-size: 14px;
-}
-
-/* Footer */
-footer {
-  padding: 25px 45px;
-  display: flex;
-  justify-content: space-between;
-  color: #6b7280;
-  border-top: 1px solid #e5e7eb;
-}
-
-/* Responsive */
-@media (max-width: 900px) {
-  .navbar {
-    flex-direction: column;
-    height: auto;
-    padding: 20px;
-    gap: 15px;
+    localStorage.setItem("dog", JSON.stringify(dog));
   }
 
-  nav {
-    gap: 18px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+  if (!contacts || contacts.length === 0) {
+    contacts = [
+      {
+        name: "Nele",
+        phone: "26546"
+      }
+    ];
 
-  .hero {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .pet-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .steps {
-    grid-template-columns: 1fr 1fr;
+    localStorage.setItem("contacts", JSON.stringify(contacts));
   }
 }
 
-@media (max-width: 550px) {
-  .hero h2 {
-    font-size: 30px;
+
+// Buttons für Mailo / Dummy-Profile
+function openProfile(isReal) {
+  if (isReal) {
+    ensureMailoData();
+    window.location.href = "view.html";
+  } else {
+    alert("Dieses Profil ist nur ein Dummy-Beispiel.");
+  }
+}
+
+
+function editPet(isReal) {
+  if (isReal) {
+    ensureMailoData();
+    window.location.href = "hundeeingabe.html";
+  } else {
+    alert("Dummy-Profile können nicht bearbeitet werden.");
+  }
+}
+
+
+function openQRCode(isReal) {
+  if (isReal) {
+    ensureMailoData();
+    window.location.href = "view.html#qrcode";
+  } else {
+    alert("Für Dummy-Profile gibt es keinen echten QR-Code.");
+  }
+}
+
+
+function openFinder(isReal) {
+  if (isReal) {
+    window.location.href = createFinderLink();
+  } else {
+    alert("Die Finder-Seite ist nur für Mailo aktiv.");
+  }
+}
+
+
+// Finder-Link für Mailo erstellen
+function createFinderLink() {
+  let dog = JSON.parse(localStorage.getItem("dog"));
+  let contacts = JSON.parse(localStorage.getItem("contacts")) || [];
+  let contact = contacts[0] || {};
+
+  if (!dog) {
+    dog = {
+      name: "Mailo",
+      species: "dog",
+      breed: "Kleinpudel",
+      gender: "male",
+      birthday: "2024-09-11",
+      kastriert: "ja",
+      weight: "8",
+      chipNumber: "689497643",
+      note: "allergie gegen Huhn"
+    };
   }
 
-  .hero-graphic {
-    min-width: 100%;
+  if (!contact.name) {
+    contact.name = "Nele";
   }
 
-  .pet-top {
-    flex-direction: column;
+  if (!contact.phone) {
+    contact.phone = "26546";
   }
 
-  .pet-img {
-    width: 100%;
-    height: 180px;
+  let params = new URLSearchParams();
+
+  params.set("name", dog.name || "");
+  params.set("breed", dog.breed || "");
+  params.set("note", dog.note || "");
+  params.set("weight", dog.weight || "");
+  params.set("gender", dog.gender || "");
+  params.set("birthday", dog.birthday || "");
+  params.set("kastriert", dog.kastriert || "");
+  params.set("contactName", contact.name || "");
+  params.set("contactPhone", contact.phone || "");
+
+  return getBasePath() + "finder.html?" + params.toString();
+}
+
+
+// Automatisch richtigen Pfad bilden
+function getBasePath() {
+  let path = window.location.pathname;
+  let folder = path.substring(0, path.lastIndexOf("/") + 1);
+
+  return window.location.origin + folder;
+}
+
+
+// Formatierungen
+function formatSpecies(species) {
+  if (species === "dog") {
+    return "Hund";
   }
 
-  .pet-actions {
-    grid-template-columns: 1fr 1fr;
+  if (species === "cat") {
+    return "Katze";
   }
 
-  .steps {
-    grid-template-columns: 1fr;
+  return "Sonstige";
+}
+
+
+function formatGender(gender) {
+  if (gender === "male") {
+    return "Männlich";
   }
+
+  if (gender === "female") {
+    return "Weiblich";
+  }
+
+  return "-";
+}
+
+
+function calculateAge(birthday) {
+  if (!birthday) {
+    return "-";
+  }
+
+  let birthDate = new Date(birthday);
+  let today = new Date();
+
+  let age = today.getFullYear() - birthDate.getFullYear();
+  let monthDiff = today.getMonth() - birthDate.getMonth();
+
+  if (
+    monthDiff < 0 ||
+    (monthDiff === 0 && today.getDate() < birthDate.getDate())
+  ) {
+    age--;
+  }
+
+  if (age < 1) {
+    return "unter 1 Jahr";
+  }
+
+  if (age === 1) {
+    return "1 Jahr";
+  }
+
+  return age + " Jahre";
 }
