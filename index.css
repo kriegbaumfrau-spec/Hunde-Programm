@@ -496,31 +496,18 @@ footer {
   }
 }
 
-/* Buttons in Haustierkarten gleichmäßig breit machen */
-.pet-card .pet-actions {
-  width: 100% !important;
-  margin-top: 18px !important;
-
+/* Buttons in Haustierkarten gleichmäßig auf volle Breite */
+.pet-actions {
   display: grid !important;
   grid-template-columns: repeat(3, 1fr) !important;
   gap: 10px !important;
+  width: 100% !important;
 }
 
-.pet-card .pet-actions a,
-.pet-card .pet-actions button {
+.pet-actions a,
+.pet-actions button {
   width: 100% !important;
-  min-width: 0 !important;
-  min-height: 46px !important;
-
-  padding: 8px 6px !important;
-
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-
-  text-align: center !important;
-  white-space: normal !important;
-
+  min-height: 48px !important;
   font-size: 12px !important;
   line-height: 1.15 !important;
 }
