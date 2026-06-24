@@ -12,17 +12,22 @@ body {
 
 /* Navigation */
 .navbar {
+  max-width: 760px;
+  width: calc(100% - 40px);
   height: 76px;
-  padding: 0 45px;
+  margin: 16px auto 0;
+  padding: 0 28px;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   background: white;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+  border-radius: 22px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+
   position: sticky;
-  top: 0;
+  top: 16px;
   z-index: 10;
 }
 
@@ -69,7 +74,7 @@ nav a.active {
 /* Seite */
 .page-background {
   min-height: calc(100vh - 76px);
-  padding: 32px 20px 60px;
+  padding: 28px 20px 60px;
 
   background:
     radial-gradient(circle at 10% 35%, rgba(37,99,235,0.08), transparent 170px),
@@ -408,10 +413,12 @@ textarea {
 /* Responsive */
 @media (max-width: 800px) {
   .navbar {
+    width: calc(100% - 24px);
     height: auto;
     padding: 18px 20px;
     flex-direction: column;
     gap: 14px;
+    margin-top: 12px;
   }
 
   nav {
