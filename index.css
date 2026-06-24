@@ -353,5 +353,20 @@ footer {
     padding: 24px 20px;
     flex-direction: column;
     gap: 10px;
+
+
+    .steps-image-section {
+  margin: 30px 45px 35px;
+  max-width: 1110px;
+  overflow: hidden;
+}
+
+.steps-image {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 18px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.04);
   }
 }
