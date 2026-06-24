@@ -113,9 +113,8 @@ function saveDog() {
 function saveAndGo() {
   saveDog();
 
-  window.location.href = "view.html";
+  window.location.href = "index.html";
 }
-
 
 // Zurück zur Startseite
 function goBack() {
