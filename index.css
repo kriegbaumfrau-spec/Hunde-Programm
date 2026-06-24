@@ -358,11 +358,11 @@ footer {
 .steps-image-section {
   margin: 30px 45px 35px;
   padding: 0;
+  width: calc(100% - 90px);
 }
 
 .steps-image {
   width: 100%;
-  max-width: 100%;
   height: auto;
   display: block;
   border-radius: 18px;
