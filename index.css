@@ -370,3 +370,69 @@ footer {
   border-radius: 18px;
   box-shadow: none;
 }
+
+  /* QR-Code Popup */
+.qr-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+
+  left: 0;
+  top: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: rgba(17, 24, 39, 0.45);
+
+  justify-content: center;
+  align-items: center;
+}
+
+.qr-modal-content {
+  width: 360px;
+  max-width: 90%;
+
+  background: white;
+  border-radius: 24px;
+  padding: 28px;
+
+  text-align: center;
+  position: relative;
+
+  box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+}
+
+.qr-modal-content h2 {
+  margin: 0 0 8px;
+  font-size: 24px;
+}
+
+.qr-modal-content p {
+  margin: 0 0 20px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.qr-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+
+  width: 34px;
+  height: 34px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #eef2f7;
+  color: #111827;
+
+  font-size: 24px;
+  cursor: pointer;
+}
+
+#indexQrCode {
+  display: flex;
+  justify-content: center;
+}
