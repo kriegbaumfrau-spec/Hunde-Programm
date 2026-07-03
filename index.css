@@ -534,3 +534,42 @@ footer {
   font-size: 12px !important;
   line-height: 1.15 !important;
 }
+
+.qr-modal-top {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+
+  display: flex;
+  gap: 8px;
+}
+
+.qr-print-icon,
+.qr-close {
+  width: 34px;
+  height: 34px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #eef2f7;
+  color: #111827;
+
+  font-size: 18px;
+  line-height: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+}
+
+.qr-close {
+  font-size: 24px;
+}
+
+.qr-print-icon:hover,
+.qr-close:hover {
+  background: #dbeafe;
+}
