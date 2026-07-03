@@ -1,126 +1,331 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-  <meta charset="UTF-8">
-  <title>Profil ansehen | PetConnect</title>
-  <link rel="stylesheet" href="view.css">
-</head>
+document.addEventListener("DOMContentLoaded", function () {
+  loadProfile();
+  createQrCode();
+});
 
-<body>
 
-  <div class="page">
+function loadProfile() {
+  let dog = readStorageJson("dog", {});
+  let contacts = readStorageJson("contacts", []);
+  let dogImage = localStorage.getItem("dogImage");
 
-    <!-- Navigation -->
-    <header class="navbar">
-      <div class="logo" onclick="goToIndex()">
-        <span class="logo-icon">🐾</span>
+  document.getElementById("dogName").textContent = dog.name || "Mailo";
 
-        <div>
-          <h1>PetConnect</h1>
-          <p>Weil sie Familie sind.</p>
+  document.getElementById("dogBreed").textContent =
+    getSpeciesText(dog.species) + " · " + (dog.breed || "Kleinpudel");
+
+  document.getElementById("dogNote").textContent =
+    dog.note || "Allergie gegen Huhn";
+
+  document.getElementById("weightValue").textContent =
+    dog.weight ? dog.weight + " kg" : "8 kg";
+
+  document.getElementById("genderValue").textContent =
+    getGenderText(dog.gender);
+
+  document.getElementById("ageValue").textContent =
+    calculateAge(dog.birthday);
+
+  document.getElementById("statusValue").textContent =
+    getKastriertText(dog.kastriert);
+
+  if (dogImage) {
+    document.getElementById("dogImage").src = dogImage;
+  }
+
+  renderContact(contacts);
+}
+
+
+function renderContact(contacts) {
+  let contactList = document.getElementById("contactList");
+
+  if (!contactList) {
+    return;
+  }
+
+  let contact = contacts[0] || {};
+
+  let contactName = contact.name || "Nele";
+  let contactPhone = contact.phone || "0176 5555555";
+  let firstLetter = contactName.charAt(0).toUpperCase();
+
+  contactList.innerHTML = `
+    <div class="contact-card">
+      <div class="contact-left">
+        <div class="contact-avatar">${firstLetter}</div>
+
+        <div class="contact-text">
+          <strong>${contactName}</strong>
+          <span>${contactPhone}</span>
         </div>
       </div>
 
-      <nav>
-        <a href="index.html">Übersicht</a>
-        <a href="hundeeingabe.html">Neues Haustier</a>
-        <a href="view.html" class="active">Profil</a>
-      </nav>
-    </header>
+      <a href="tel:${contactPhone}" class="call-btn">☎</a>
+    </div>
+  `;
+}
 
 
-    <main class="profile-page">
+function createQrCode() {
+  let qrBox = document.getElementById("qrCode");
 
-      <a href="index.html" class="back-link">← Zurück zur Übersicht</a>
+  if (!qrBox) {
+    return;
+  }
 
-      <!-- Profilkarte -->
-      <section class="profile-card">
+  let finderLink = createFinderLink();
 
-        <div class="profile-main">
+  qrBox.innerHTML = "";
 
-          <div class="image-box">
-            <img id="dogImage" src="Mailo.jpg" alt="Haustierbild">
-          </div>
+  let qrImage = document.createElement("img");
 
-          <div class="profile-info">
-            <span class="label">Haustierprofil</span>
-            <h2 id="dogName">Mailo</h2>
-            <p id="dogBreed">Hund · Kleinpudel</p>
-            <p id="dogNote">Allergie gegen Huhn</p>
+  qrImage.src =
+    "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" +
+    encodeURIComponent(finderLink);
 
-            <div class="profile-buttons">
-              <button type="button" onclick="toggleLocationOptions()" class="location-btn">
-                Standort an Besitzer senden
-              </button>
+  qrImage.alt = "Finder QR-Code";
+  qrImage.style.width = "220px";
+  qrImage.style.height = "220px";
+  qrImage.style.display = "block";
 
-              <a href="hundeeingabe.html" class="edit-btn">Bearbeiten</a>
-            </div>
-
-            <div id="locationOptions" class="location-options">
-              <button type="button" onclick="getLocationAndSend('whatsapp')">Per WhatsApp senden</button>
-              <button type="button" onclick="getLocationAndSend('sms')">Per SMS senden</button>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="stats-grid">
-          <div class="stat green">
-            <strong id="weightValue">8 kg</strong>
-            <span>Gewicht</span>
-          </div>
-
-          <div class="stat yellow">
-            <strong id="genderValue">Männlich</strong>
-            <span>Geschlecht</span>
-          </div>
-
-          <div class="stat blue">
-            <strong id="ageValue">1 Jahr</strong>
-            <span>Alter</span>
-          </div>
-
-          <div class="stat purple">
-            <strong id="statusValue">Kastriert</strong>
-            <span>Status</span>
-          </div>
-        </div>
-
-      </section>
+  qrBox.appendChild(qrImage);
+}
 
 
-      <!-- Untere Karten -->
-      <section class="detail-grid">
+function createFinderLink() {
+  let dog = readStorageJson("dog", {});
+  let contacts = readStorageJson("contacts", []);
+  let contact = contacts[0] || {};
 
-        <!-- Kontakt -->
-        <article class="info-card">
-          <h3>Kontaktperson</h3>
-          <p class="card-subtitle">Diese Person wird im Notfall kontaktiert.</p>
+  let params = new URLSearchParams();
 
-          <div id="contactList"></div>
-        </article>
+  params.set("name", dog.name || "Mailo");
+  params.set("breed", dog.breed || "Kleinpudel");
+  params.set("note", dog.note || "Allergie gegen Huhn");
+  params.set("weight", dog.weight || "8");
+  params.set("gender", dog.gender || "male");
+  params.set("birthday", dog.birthday || "2024-09-11");
+  params.set("kastriert", dog.kastriert || "ja");
+  params.set("contactName", contact.name || "Nele");
+  params.set("contactPhone", contact.phone || "0176 5555555");
+
+  return "https://kriegbaumfrau-spec.github.io/Hunde-Programm/finder.html?" + params.toString();
+}
 
 
-        <!-- QR-Code -->
-        <article class="info-card qr-card">
-          <h3>Finder QR-Code</h3>
-          <p class="card-subtitle">
-            Scanne diesen Code, um die Finder-Seite zu öffnen.
-          </p>
+function toggleLocationOptions() {
+  let options = document.getElementById("locationOptions");
 
-          <div id="qrCode"></div>
+  if (options) {
+    options.classList.toggle("show");
+  }
+}
 
-          <button type="button" onclick="printQrCode()" class="print-btn">
-            QR-Code drucken
-          </button>
-        </article>
 
-      </section>
+function getLocationAndSend(type) {
+  let contacts = readStorageJson("contacts", []);
+  let contact = contacts[0] || {};
+  let phone = contact.phone || "0176 5555555";
 
-    </main>
+  if (!navigator.geolocation) {
+    alert("Standort wird von diesem Gerät nicht unterstützt.");
+    return;
+  }
 
-  </div>
+  navigator.geolocation.getCurrentPosition(
+    function (position) {
+      let latitude = position.coords.latitude;
+      let longitude = position.coords.longitude;
 
-  <script src="view.js"></script>
-</body>
-</html>
+      let mapsLink = "https://www.google.com/maps?q=" + latitude + "," + longitude;
+
+      let message =
+        "Hallo, ich habe dein Haustier gefunden. Hier ist mein Standort: " +
+        mapsLink;
+
+      let cleanedPhone = cleanPhoneNumber(phone);
+
+      if (type === "whatsapp") {
+        window.location.href =
+          "https://wa.me/" + cleanedPhone + "?text=" + encodeURIComponent(message);
+      }
+
+      if (type === "sms") {
+        window.location.href =
+          "sms:+" + cleanedPhone + "?body=" + encodeURIComponent(message);
+      }
+    },
+    function () {
+      alert("Standort konnte nicht abgerufen werden.");
+    }
+  );
+}
+
+
+function cleanPhoneNumber(phone) {
+  let cleaned = phone.replace(/\s+/g, "");
+  cleaned = cleaned.replace("+", "");
+  cleaned = cleaned.replace("/", "");
+  cleaned = cleaned.replace("-", "");
+
+  if (cleaned.startsWith("0")) {
+    cleaned = "49" + cleaned.substring(1);
+  }
+
+  return cleaned;
+}
+
+
+function printQrCode() {
+  let finderLink = createFinderLink();
+
+  let qrImageUrl =
+    "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" +
+    encodeURIComponent(finderLink);
+
+  let printWindow = window.open("", "_blank");
+
+  if (!printWindow) {
+    alert("Das Druckfenster konnte nicht geöffnet werden.");
+    return;
+  }
+
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html lang="de">
+    <head>
+      <meta charset="UTF-8">
+      <title>PetConnect QR-Code</title>
+
+      <style>
+        body {
+          margin: 0;
+          padding: 40px;
+          font-family: Arial, sans-serif;
+          text-align: center;
+          color: #111827;
+        }
+
+        h1 {
+          margin-bottom: 8px;
+          font-size: 28px;
+        }
+
+        p {
+          margin-bottom: 28px;
+          color: #4b5563;
+          font-size: 15px;
+        }
+
+        img {
+          width: 300px;
+          height: 300px;
+        }
+
+        .hint {
+          margin-top: 24px;
+          font-size: 13px;
+          color: #6b7280;
+        }
+      </style>
+    </head>
+
+    <body>
+      <h1>PetConnect QR-Code</h1>
+      <p>Scanne diesen QR-Code, um die Finder-Seite zu öffnen.</p>
+
+      <img src="${qrImageUrl}" alt="Finder QR-Code">
+
+      <div class="hint">
+        Haustierprofil: Mailo
+      </div>
+
+      <script>
+        window.onload = function() {
+          window.print();
+        };
+      <\/script>
+    </body>
+    </html>
+  `);
+
+  printWindow.document.close();
+}
+
+
+function calculateAge(birthday) {
+  if (!birthday) {
+    return "1 Jahr";
+  }
+
+  let birthDate = new Date(birthday);
+  let today = new Date();
+
+  let age = today.getFullYear() - birthDate.getFullYear();
+  let monthDifference = today.getMonth() - birthDate.getMonth();
+
+  if (
+    monthDifference < 0 ||
+    (monthDifference === 0 && today.getDate() < birthDate.getDate())
+  ) {
+    age--;
+  }
+
+  if (age === 1) {
+    return "1 Jahr";
+  }
+
+  return age + " Jahre";
+}
+
+
+function getSpeciesText(species) {
+  if (species === "cat") {
+    return "Katze";
+  }
+
+  if (species === "other") {
+    return "Sonstige";
+  }
+
+  return "Hund";
+}
+
+
+function getGenderText(gender) {
+  if (gender === "female") {
+    return "Weiblich";
+  }
+
+  return "Männlich";
+}
+
+
+function getKastriertText(kastriert) {
+  if (kastriert === "nein") {
+    return "Nicht kastriert";
+  }
+
+  return "Kastriert";
+}
+
+
+function readStorageJson(key, fallback) {
+  try {
+    let value = localStorage.getItem(key);
+
+    if (!value) {
+      return fallback;
+    }
+
+    return JSON.parse(value);
+  } catch (error) {
+    return fallback;
+  }
+}
+
+
+function goToIndex() {
+  window.location.href = "index.html";
+}
