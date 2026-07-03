@@ -1,98 +1,138 @@
-window.onload = function () {
+document.addEventListener("DOMContentLoaded", function () {
+  loadFinderProfile();
+});
 
+
+function loadFinderProfile() {
   let params = new URLSearchParams(window.location.search);
 
-  let dog = {
-    name: params.get("name") || "",
-    breed: params.get("breed") || "",
-    note: params.get("note") || "",
-    weight: params.get("weight") || "",
-    gender: params.get("gender") || "",
-    birthday: params.get("birthday") || "",
-    kastriert: params.get("kastriert") || ""
-  };
+  let name = params.get("name") || "Mailo";
+  let breed = params.get("breed") || "Kleinpudel";
+  let note = params.get("note") || "Allergie gegen Huhn";
+  let weight = params.get("weight") || "8";
+  let gender = params.get("gender") || "male";
+  let birthday = params.get("birthday") || "2024-09-11";
+  let kastriert = params.get("kastriert") || "ja";
+  let contactName = params.get("contactName") || "Nele";
+  let contactPhone = params.get("contactPhone") || "0176 5555555";
 
-  let contact = {
-    name: params.get("contactName") || "",
-    phone: params.get("contactPhone") || ""
-  };
+  document.getElementById("dogName").textContent = name;
+  document.getElementById("dogBreed").textContent = "Hund · " + breed;
+  document.getElementById("dogNote").textContent = note;
 
-  document.getElementById("nameOutput").innerText = dog.name;
-  document.getElementById("breedOutput").innerText = dog.breed;
-  document.getElementById("noteOutput").innerText = dog.note;
+  document.getElementById("weightValue").textContent = weight + " kg";
+  document.getElementById("genderValue").textContent = getGenderText(gender);
+  document.getElementById("ageValue").textContent = calculateAge(birthday);
+  document.getElementById("statusValue").textContent = getKastriertText(kastriert);
 
-  document.getElementById("weightOutput").innerText = dog.weight
-    ? dog.weight + " kg"
-    : "-";
-
-  document.getElementById("genderOutput").innerText = formatGender(dog.gender);
-  document.getElementById("ageOutput").innerText = calculateAge(dog.birthday);
-
-  document.getElementById("kastriertCardOutput").innerText =
-    formatKastriert(dog.kastriert);
-
-  renderFinderContact(contact);
-};
-
-
-// Geschlecht anzeigen
-function formatGender(gender) {
-  if (gender === "male") {
-    return "Männlich";
-  }
-
-  if (gender === "female") {
-    return "Weiblich";
-  }
-
-  return "-";
+  renderContact(contactName, contactPhone);
 }
 
 
-// Kastriert anzeigen
-function formatKastriert(value) {
-  if (value === "ja") {
-    return "Kastriert";
+function renderContact(name, phone) {
+  let contactList = document.getElementById("contactList");
+
+  if (!contactList) {
+    return;
   }
 
-  if (value === "nein") {
-    return "Nicht";
-  }
+  let firstLetter = name.charAt(0).toUpperCase();
 
-  return "-";
+  contactList.innerHTML = `
+    <div class="contact-card">
+      <div class="contact-left">
+        <div class="contact-avatar">${firstLetter}</div>
+
+        <div class="contact-text">
+          <strong>${name}</strong>
+          <span>${phone}</span>
+        </div>
+      </div>
+
+      <a href="tel:${phone}" class="call-btn">☎</a>
+    </div>
+  `;
 }
 
 
-// Alter berechnen
+function toggleLocationOptions() {
+  let options = document.getElementById("locationOptions");
+
+  if (options) {
+    options.classList.toggle("show");
+  }
+}
+
+
+function getLocationAndSend(type) {
+  let params = new URLSearchParams(window.location.search);
+  let phone = params.get("contactPhone") || "0176 5555555";
+
+  if (!navigator.geolocation) {
+    alert("Standort wird von diesem Gerät nicht unterstützt.");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    function (position) {
+      let latitude = position.coords.latitude;
+      let longitude = position.coords.longitude;
+
+      let mapsLink = "https://www.google.com/maps?q=" + latitude + "," + longitude;
+
+      let message =
+        "Hallo, ich habe dein Haustier gefunden. Hier ist mein Standort: " +
+        mapsLink;
+
+      let cleanedPhone = cleanPhoneNumber(phone);
+
+      if (type === "whatsapp") {
+        window.location.href =
+          "https://wa.me/" + cleanedPhone + "?text=" + encodeURIComponent(message);
+      }
+
+      if (type === "sms") {
+        window.location.href =
+          "sms:+" + cleanedPhone + "?body=" + encodeURIComponent(message);
+      }
+    },
+    function () {
+      alert("Standort konnte nicht abgerufen werden.");
+    }
+  );
+}
+
+
+function cleanPhoneNumber(phone) {
+  let cleaned = phone.replace(/\s+/g, "");
+  cleaned = cleaned.replace("+", "");
+  cleaned = cleaned.replace("/", "");
+  cleaned = cleaned.replace("-", "");
+
+  if (cleaned.startsWith("0")) {
+    cleaned = "49" + cleaned.substring(1);
+  }
+
+  return cleaned;
+}
+
+
 function calculateAge(birthday) {
   if (!birthday) {
-    return "-";
+    return "1 Jahr";
   }
 
   let birthDate = new Date(birthday);
   let today = new Date();
 
   let age = today.getFullYear() - birthDate.getFullYear();
-  let monthDiff = today.getMonth() - birthDate.getMonth();
+  let monthDifference = today.getMonth() - birthDate.getMonth();
 
   if (
-    monthDiff < 0 ||
-    (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    monthDifference < 0 ||
+    (monthDifference === 0 && today.getDate() < birthDate.getDate())
   ) {
     age--;
-  }
-
-  if (age < 1) {
-    let months =
-      (today.getFullYear() - birthDate.getFullYear()) * 12 +
-      today.getMonth() -
-      birthDate.getMonth();
-
-    if (today.getDate() < birthDate.getDate()) {
-      months--;
-    }
-
-    return months + " Monate";
   }
 
   if (age === 1) {
@@ -103,110 +143,19 @@ function calculateAge(birthday) {
 }
 
 
-// Standort senden 
-function getOwnerPhoneNumber() {
-  let params = new URLSearchParams(window.location.search);
-  let phone = params.get("contactPhone");
-
-  if (!phone) {
-    alert("Es wurde keine Telefonnummer gefunden.");
-    return null;
+function getGenderText(gender) {
+  if (gender === "female") {
+    return "Weiblich";
   }
 
-  phone = phone.replace(/\s/g, "");
-  phone = phone.replace("+", "");
-  phone = phone.replace(/\//g, "");
-  phone = phone.replace(/-/g, "");
-
-  if (phone.startsWith("0")) {
-    phone = "49" + phone.substring(1);
-  }
-
-  return phone;
+  return "Männlich";
 }
 
 
-function getLocationAndSend(type) {
-  let ownerPhoneNumber = getOwnerPhoneNumber();
-
-  if (!ownerPhoneNumber) {
-    return;
+function getKastriertText(kastriert) {
+  if (kastriert === "nein") {
+    return "Nicht kastriert";
   }
 
-  if (!navigator.geolocation) {
-    alert("Dein Browser unterstützt keine Standortfreigabe.");
-    return;
-  }
-
-  alert("Standort wird abgefragt...");
-
-  navigator.geolocation.getCurrentPosition(
-    function(position) {
-      let latitude = position.coords.latitude;
-      let longitude = position.coords.longitude;
-
-      let mapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
-
-      let message =
-        `Hallo, ich habe deinen Hund gefunden. Hier ist mein aktueller Standort: ${mapsLink}`;
-
-      if (type === "whatsapp") {
-        window.location.href =
-          `https://wa.me/${ownerPhoneNumber}?text=${encodeURIComponent(message)}`;
-      }
-
-      if (type === "sms") {
-        window.location.href =
-          `sms:+${ownerPhoneNumber}?body=${encodeURIComponent(message)}`;
-      }
-    },
-    function(error) {
-      alert("Standort konnte nicht abgerufen werden. Bitte erlaube den Standortzugriff.");
-      console.log(error);
-    }
-  );
-}
-
-
-function sendLocationWhatsApp() {
-  getLocationAndSend("whatsapp");
-}
-
-
-function sendLocationSMS() {
-  getLocationAndSend("sms");
-}
-
-
-function toggleSendOptions() {
-  let options = document.getElementById("sendOptions");
-  options.classList.toggle("show");
-}
-
-
-// Kontakt anzeigen
-function renderFinderContact(contact) {
-  let box = document.getElementById("ownerContactBox");
-
-  if (!box) return;
-
-  if (!contact.name || !contact.phone) {
-    box.innerHTML = "";
-    return;
-  }
-
-  let firstLetter = contact.name.charAt(0).toUpperCase();
-
-  box.innerHTML = `
-    <div class="owner-card">
-      <div class="owner-avatar">${firstLetter}</div>
-
-      <div class="owner-info">
-        <strong>${contact.name}'s Telefon</strong>
-        <span>${contact.phone}</span>
-      </div>
-
-      <a href="tel:${contact.phone}" class="owner-call-btn">✆</a>
-    </div>
-  `;
+  return "Kastriert";
 }
