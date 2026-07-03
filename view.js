@@ -1,94 +1,263 @@
-window.onload = function () {
+document.addEventListener("DOMContentLoaded", function () {
+  loadProfile();
+  createQrCode();
+});
 
-  // Bild laden 
-  let img = localStorage.getItem("dogImage");
 
-  if (img) {
-    document.getElementById("imageOutput").src = img;
+function loadProfile() {
+  let dog = JSON.parse(localStorage.getItem("dog")) || {};
+  let contacts = JSON.parse(localStorage.getItem("contacts")) || [];
+  let dogImage = localStorage.getItem("dogImage");
+
+  document.getElementById("dogName").textContent = dog.name || "Mailo";
+
+  document.getElementById("dogBreed").textContent =
+    getSpeciesText(dog.species) + " · " + (dog.breed || "Kleinpudel");
+
+  document.getElementById("dogNote").textContent =
+    dog.note || "Allergie gegen Huhn";
+
+  document.getElementById("weightValue").textContent =
+    dog.weight ? dog.weight + " kg" : "8 kg";
+
+  document.getElementById("genderValue").textContent =
+    getGenderText(dog.gender);
+
+  document.getElementById("ageValue").textContent =
+    calculateAge(dog.birthday);
+
+  document.getElementById("statusValue").textContent =
+    dog.kastriert === "nein" ? "Nicht kastriert" : "Kastriert";
+
+  if (dogImage) {
+    document.getElementById("dogImage").src = dogImage;
   }
 
-  // Daten laden
-  let dog = JSON.parse(localStorage.getItem("dog"));
-
-  if (dog) {
-    document.getElementById("nameOutput").innerText = dog.name || "";
-    document.getElementById("breedOutput").innerText = dog.breed || "";
-    document.getElementById("noteOutput").innerText = dog.note || "";
-
-    document.getElementById("weightOutput").innerText = dog.weight
-      ? dog.weight + " kg"
-      : "-";
-
-    document.getElementById("genderOutput").innerText = formatGender(dog.gender);
-    document.getElementById("ageOutput").innerText = calculateAge(dog.birthday);
-
-    document.getElementById("kastriertCardOutput").innerText =
-      formatKastriert(dog.kastriert);
-  }
-
-  renderOwnerContact();
-  createFinderQRCode();
-};
-
-
-// Geschlecht anzeigen
-function formatGender(gender) {
-  if (gender === "male") {
-    return "Männlich";
-  }
-
-  if (gender === "female") {
-    return "Weiblich";
-  }
-
-  return "-";
+  renderContact(contacts);
 }
 
 
-// Kastriert anzeigen
-function formatKastriert(value) {
-  if (value === "ja") {
-    return "Kastriert";
-  }
+function renderContact(contacts) {
+  let contactList = document.getElementById("contactList");
 
-  if (value === "nein") {
-    return "Nicht";
-  }
+  let contact = contacts[0] || {
+    name: "Nele",
+    phone: "0176 5555555"
+  };
 
-  return "-";
+  let firstLetter = contact.name.charAt(0).toUpperCase();
+
+  contactList.innerHTML = `
+    <div class="contact-card">
+      <div class="contact-left">
+        <div class="contact-avatar">${firstLetter}</div>
+
+        <div class="contact-text">
+          <strong>${contact.name}</strong>
+          <span>${contact.phone}</span>
+        </div>
+      </div>
+
+      <a href="tel:${contact.phone}" class="call-btn">☎</a>
+    </div>
+  `;
 }
 
 
-// Alter berechnen
+function createQrCode() {
+  let qrBox = document.getElementById("qrCode");
+
+  if (!qrBox) {
+    return;
+  }
+
+  let finderLink = createFinderLink();
+
+  let qrImage = document.createElement("img");
+
+  qrImage.src =
+    "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" +
+    encodeURIComponent(finderLink);
+
+  qrImage.alt = "Finder QR-Code";
+
+  qrBox.innerHTML = "";
+  qrBox.appendChild(qrImage);
+}
+
+
+function createFinderLink() {
+  let dog = JSON.parse(localStorage.getItem("dog")) || {};
+  let contacts = JSON.parse(localStorage.getItem("contacts")) || [];
+  let contact = contacts[0] || {};
+
+  let params = new URLSearchParams();
+
+  params.set("name", dog.name || "Mailo");
+  params.set("breed", dog.breed || "Kleinpudel");
+  params.set("note", dog.note || "Allergie gegen Huhn");
+  params.set("weight", dog.weight || "8");
+  params.set("gender", dog.gender || "male");
+  params.set("birthday", dog.birthday || "2024-09-11");
+  params.set("kastriert", dog.kastriert || "ja");
+  params.set("contactName", contact.name || "Nele");
+  params.set("contactPhone", contact.phone || "0176 5555555");
+
+  return "https://kriegbaumfrau-spec.github.io/Hunde-Programm/finder.html?" + params.toString();
+}
+
+
+function toggleLocationOptions() {
+  let options = document.getElementById("locationOptions");
+
+  if (options) {
+    options.classList.toggle("show");
+  }
+}
+
+
+function getLocationAndSend(type) {
+  let contacts = JSON.parse(localStorage.getItem("contacts")) || [];
+
+  let contact = contacts[0] || {
+    phone: "0176 5555555"
+  };
+
+  if (!navigator.geolocation) {
+    alert("Standort wird von diesem Gerät nicht unterstützt.");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(function (position) {
+    let latitude = position.coords.latitude;
+    let longitude = position.coords.longitude;
+
+    let mapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
+
+    let message =
+      "Hallo, ich habe dein Haustier gefunden. Hier ist mein Standort: " +
+      mapsLink;
+
+    let phone = cleanPhoneNumber(contact.phone);
+
+    if (type === "whatsapp") {
+      window.location.href =
+        "https://wa.me/" + phone + "?text=" + encodeURIComponent(message);
+    }
+
+    if (type === "sms") {
+      window.location.href =
+        "sms:+" + phone + "?body=" + encodeURIComponent(message);
+    }
+
+  }, function () {
+    alert("Standort konnte nicht abgerufen werden.");
+  });
+}
+
+
+function cleanPhoneNumber(phone) {
+  let cleaned = phone.replace(/\s+/g, "");
+  cleaned = cleaned.replace("+", "");
+  cleaned = cleaned.replace("/", "");
+  cleaned = cleaned.replace("-", "");
+
+  if (cleaned.startsWith("0")) {
+    cleaned = "49" + cleaned.substring(1);
+  }
+
+  return cleaned;
+}
+
+
+function printQrCode() {
+  let finderLink = createFinderLink();
+
+  let qrImageUrl =
+    "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" +
+    encodeURIComponent(finderLink);
+
+  let printWindow = window.open("", "_blank");
+
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html lang="de">
+    <head>
+      <meta charset="UTF-8">
+      <title>PetConnect QR-Code</title>
+
+      <style>
+        body {
+          margin: 0;
+          padding: 40px;
+          font-family: Arial, sans-serif;
+          text-align: center;
+          color: #111827;
+        }
+
+        h1 {
+          margin-bottom: 8px;
+          font-size: 28px;
+        }
+
+        p {
+          margin-bottom: 28px;
+          color: #4b5563;
+          font-size: 15px;
+        }
+
+        img {
+          width: 300px;
+          height: 300px;
+        }
+
+        .hint {
+          margin-top: 24px;
+          font-size: 13px;
+          color: #6b7280;
+        }
+      </style>
+    </head>
+
+    <body>
+      <h1>PetConnect QR-Code</h1>
+      <p>Scanne diesen QR-Code, um die Finder-Seite zu öffnen.</p>
+
+      <img src="${qrImageUrl}" alt="Finder QR-Code">
+
+      <div class="hint">
+        Haustierprofil: Mailo
+      </div>
+
+      <script>
+        window.onload = function() {
+          window.print();
+        };
+      <\/script>
+    </body>
+    </html>
+  `);
+
+  printWindow.document.close();
+}
+
+
 function calculateAge(birthday) {
   if (!birthday) {
-    return "-";
+    return "1 Jahr";
   }
 
   let birthDate = new Date(birthday);
   let today = new Date();
 
   let age = today.getFullYear() - birthDate.getFullYear();
-  let monthDiff = today.getMonth() - birthDate.getMonth();
+  let monthDifference = today.getMonth() - birthDate.getMonth();
 
   if (
-    monthDiff < 0 ||
-    (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    monthDifference < 0 ||
+    (monthDifference === 0 && today.getDate() < birthDate.getDate())
   ) {
     age--;
-  }
-
-  if (age < 1) {
-    let months =
-      (today.getFullYear() - birthDate.getFullYear()) * 12 +
-      today.getMonth() -
-      birthDate.getMonth();
-
-    if (today.getDate() < birthDate.getDate()) {
-      months--;
-    }
-
-    return months + " Monate";
   }
 
   if (age === 1) {
@@ -99,160 +268,28 @@ function calculateAge(birthday) {
 }
 
 
-// Button bearbeiten 
-function goToEdit() {
-  window.location.href = "hundeeingabe.html";
+function getSpeciesText(species) {
+  if (species === "cat") {
+    return "Katze";
+  }
+
+  if (species === "other") {
+    return "Sonstige";
+  }
+
+  return "Hund";
 }
 
 
-// Standort senden 
-function getOwnerPhoneNumber() {
-  let contacts = JSON.parse(localStorage.getItem("contacts")) || [];
-
-  if (contacts.length === 0) {
-    alert("Es wurde noch keine Kontaktperson gespeichert.");
-    return null;
+function getGenderText(gender) {
+  if (gender === "female") {
+    return "Weiblich";
   }
 
-  let phone = contacts[0].phone;
-
-  phone = phone.replace(/\s/g, "");
-  phone = phone.replace("+", "");
-  phone = phone.replace(/\//g, "");
-  phone = phone.replace(/-/g, "");
-
-  if (phone.startsWith("0")) {
-    phone = "49" + phone.substring(1);
-  }
-
-  return phone;
+  return "Männlich";
 }
 
 
-function getLocationAndSend(type) {
-  let ownerPhoneNumber = getOwnerPhoneNumber();
-
-  if (!ownerPhoneNumber) {
-    return;
-  }
-
-  if (!navigator.geolocation) {
-    alert("Dein Browser unterstützt keine Standortfreigabe.");
-    return;
-  }
-
-  alert("Standort wird abgefragt...");
-
-  navigator.geolocation.getCurrentPosition(
-    function(position) {
-      let latitude = position.coords.latitude;
-      let longitude = position.coords.longitude;
-
-      let mapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
-
-      let message =
-        `Hallo, ich habe deinen Hund gefunden. Hier ist mein aktueller Standort: ${mapsLink}`;
-
-      if (type === "whatsapp") {
-        window.location.href =
-          `https://wa.me/${ownerPhoneNumber}?text=${encodeURIComponent(message)}`;
-      }
-
-      if (type === "sms") {
-        window.location.href =
-          `sms:+${ownerPhoneNumber}?body=${encodeURIComponent(message)}`;
-      }
-    },
-    function(error) {
-      alert("Standort konnte nicht abgerufen werden. Bitte erlaube den Standortzugriff.");
-      console.log(error);
-    }
-  );
-}
-
-
-function sendLocationWhatsApp() {
-  getLocationAndSend("whatsapp");
-}
-
-
-function sendLocationSMS() {
-  getLocationAndSend("sms");
-}
-
-
-function toggleSendOptions() {
-  let options = document.getElementById("sendOptions");
-  options.classList.toggle("show");
-}
-
-
-// Kontakt anzeigen
-function renderOwnerContact() {
-  let contacts = JSON.parse(localStorage.getItem("contacts")) || [];
-  let box = document.getElementById("ownerContactBox");
-
-  if (!box) return;
-
-  if (contacts.length === 0) {
-    box.innerHTML = "";
-    return;
-  }
-
-  let contact = contacts[0];
-  let firstLetter = contact.name.charAt(0).toUpperCase();
-
-  box.innerHTML = `
-    <div class="owner-card">
-      <div class="owner-avatar">${firstLetter}</div>
-
-      <div class="owner-info">
-        <strong>${contact.name}´s Telefon</strong>
-        <span>${contact.phone}</span>
-      </div>
-
-      <a href="tel:${contact.phone}" class="owner-call-btn">✆</a>
-    </div>
-  `;
-}
-
-function createFinderQRCode() {
-  let dog = JSON.parse(localStorage.getItem("dog"));
-  let contacts = JSON.parse(localStorage.getItem("contacts")) || [];
-
-  if (!dog) {
-    return;
-  }
-
-  let contact = contacts[0] || {};
-
-  let params = new URLSearchParams();
-
-  params.set("name", dog.name || "");
-  params.set("breed", dog.breed || "");
-  params.set("note", dog.note || "");
-  params.set("weight", dog.weight || "");
-  params.set("gender", dog.gender || "");
-  params.set("birthday", dog.birthday || "");
-  params.set("kastriert", dog.kastriert || "");
-  params.set("contactName", contact.name || "");
-  params.set("contactPhone", contact.phone || "");
-
-  let finderLink =
-  "https://kriegbaumfrau-spec.github.io/Hunde-Programm/finder.html?" +
-  params.toString();
-  
-  let qrBox = document.getElementById("qrcode");
-
-  if (!qrBox) {
-    return;
-  }
-
-  qrBox.innerHTML = "";
-
-  new QRCode(qrBox, {
-    text: finderLink,
-    width: 180,
-    height: 180
-  });
+function goToIndex() {
+  window.location.href = "index.html";
 }
