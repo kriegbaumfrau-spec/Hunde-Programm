@@ -52,3 +52,79 @@ function createFinderLink() {
 
   return "https://kriegbaumfrau-spec.github.io/Hunde-Programm/finder.html?" + params.toString();
 }
+
+function printQrCode() {
+  let finderLink = createFinderLink();
+
+  let qrImageUrl =
+    "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" +
+    encodeURIComponent(finderLink);
+
+  let printWindow = window.open("", "_blank");
+
+  if (!printWindow) {
+    alert("Das Druckfenster konnte nicht geöffnet werden.");
+    return;
+  }
+
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html lang="de">
+    <head>
+      <meta charset="UTF-8">
+      <title>PetConnect QR-Code</title>
+
+      <style>
+        body {
+          margin: 0;
+          padding: 40px;
+          font-family: Arial, sans-serif;
+          text-align: center;
+          color: #111827;
+        }
+
+        h1 {
+          margin-bottom: 8px;
+          font-size: 28px;
+        }
+
+        p {
+          margin-bottom: 28px;
+          color: #4b5563;
+          font-size: 15px;
+        }
+
+        img {
+          width: 300px;
+          height: 300px;
+        }
+
+        .hint {
+          margin-top: 24px;
+          font-size: 13px;
+          color: #6b7280;
+        }
+      </style>
+    </head>
+
+    <body>
+      <h1>PetConnect QR-Code</h1>
+      <p>Scanne diesen QR-Code, um die Finder-Seite zu öffnen.</p>
+
+      <img src="${qrImageUrl}" alt="Finder QR-Code">
+
+      <div class="hint">
+        Haustierprofil: Mailo
+      </div>
+
+      <script>
+        window.onload = function() {
+          window.print();
+        };
+      <\/script>
+    </body>
+    </html>
+  `);
+
+  printWindow.document.close();
+}
