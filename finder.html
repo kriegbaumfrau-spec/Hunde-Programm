@@ -1,77 +1,131 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Mein Haustier</title>
- 
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="finder.css">
-
+  <title>Gefundenes Haustier | PetConnect</title>
+  <link rel="stylesheet" href="finder.css?v=2">
 </head>
 
 <body>
 
+  <div class="page">
 
-<div class="header">
+    <!-- Navigation -->
+    <header class="navbar">
+      <div class="logo">
+        <span class="logo-icon">🐾</span>
 
-  <div class="image-wrapper">
-    <img id="imageOutput" class="dog-img" src="tier-icon.png">
+        <div>
+          <h1>PetConnect</h1>
+          <p>Weil sie Familie sind.</p>
+        </div>
+      </div>
+
+      <nav>
+        <span class="active">Finder-Seite</span>
+      </nav>
+    </header>
+
+
+    <main class="finder-page">
+
+      <section class="finder-hero">
+
+        <div class="finder-image-box">
+          <img id="dogImage" src="Mailo.jpg" alt="Gefundenes Haustier">
+        </div>
+
+        <div class="finder-info">
+          <span class="label">Gefundenes Haustier</span>
+
+          <h2 id="dogName">Mailo</h2>
+          <p id="dogBreed">Hund · Kleinpudel</p>
+
+          <div id="dogNote" class="note-box">
+            Allergie gegen Huhn
+          </div>
+
+          <button type="button" onclick="toggleLocationOptions()" class="main-location-btn">
+            Standort an Besitzer senden
+          </button>
+
+          <div id="locationOptions" class="location-options">
+            <button type="button" onclick="getLocationAndSend('whatsapp')" class="whatsapp-btn">
+              Per WhatsApp senden
+            </button>
+
+            <button type="button" onclick="getLocationAndSend('sms')" class="sms-btn">
+              Per SMS senden
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+
+      <section class="stats-grid">
+
+        <div class="stat green">
+          <strong id="weightValue">8 kg</strong>
+          <span>Gewicht</span>
+        </div>
+
+        <div class="stat yellow">
+          <strong id="genderValue">Männlich</strong>
+          <span>Geschlecht</span>
+        </div>
+
+        <div class="stat blue">
+          <strong id="ageValue">1 Jahr</strong>
+          <span>Alter</span>
+        </div>
+
+        <div class="stat purple">
+          <strong id="statusValue">Kastriert</strong>
+          <span>Status</span>
+        </div>
+
+      </section>
+
+
+      <section class="contact-section">
+
+        <article class="info-card">
+          <h3>Kontaktperson</h3>
+          <p class="card-subtitle">
+            Bitte kontaktiere diese Person, wenn du das Haustier gefunden hast.
+          </p>
+
+          <div id="contactList"></div>
+        </article>
+
+        <article class="info-card help-card">
+          <h3>Was soll ich tun?</h3>
+
+          <div class="help-steps">
+            <div>
+              <strong>1</strong>
+              <span>Haustier sichern</span>
+            </div>
+
+            <div>
+              <strong>2</strong>
+              <span>Standort senden</span>
+            </div>
+
+            <div>
+              <strong>3</strong>
+              <span>Besitzer kontaktieren</span>
+            </div>
+          </div>
+        </article>
+
+      </section>
+
+    </main>
+
   </div>
 
-</div>
-
-
-<div class="info">
-  <h1 id="nameOutput"></h1>
-  <p id="breedOutput"></p>
-
-  <p id="noteOutput" class="note-text"></p>
-
-  <div class="info-cards">
-    <div class="info-card green-card">
-      <strong id="weightOutput"></strong>
-      <span>Gewicht</span>
-    </div>
-
-    <div class="info-card yellow-card">
-      <strong id="genderOutput"></strong>
-      <span>Geschlecht</span>
-    </div>
-
-    <div class="info-card blue-card">
-      <strong id="ageOutput"></strong>
-      <span>Alter</span>
-    </div>
-
-    <div class="info-card purple-card">
-    <strong id="kastriertCardOutput"></strong>
-    <span>Status</span>
-    </div>
-
-  </div>
-</div>
-
-<!--Standort an Besitzer senden --> 
-<div class="send-location-box">
-  <button class="send-location-main" onclick="toggleSendOptions()">
-    <span>Standort an Besitzer senden</span>
-    <span class="send-icon">📍</span>
-  </button>
-
-  <div id="sendOptions" class="send-options">
-    <button onclick="sendLocationWhatsApp()" class="option whatsapp-option">
-      Per WhatsApp
-    </button>
-
-    <button onclick="sendLocationSMS()" class="option sms-option">
-      Per SMS
-    </button>
-  </div>
-</div>
-
-<div class="owner-contact-box" id="ownerContactBox"></div>
-<script src="finder.js"></script>
+  <script src="finder.js?v=2"></script>
 </body>
-
-
 </html>
