@@ -138,15 +138,22 @@
 <!-- QR-Code Popup -->
 <div id="qrModal" class="qr-modal">
   <div class="qr-modal-content">
-    <button type="button" class="qr-close" onclick="closeQrModal()">×</button>
+
+    <div class="qr-modal-top">
+      <button type="button" class="qr-print-icon" onclick="printQrCode()" title="QR-Code drucken">
+        🖨️
+      </button>
+
+      <button type="button" class="qr-close" onclick="closeQrModal()">×</button>
+    </div>
 
     <h2>Finder QR-Code</h2>
     <p>Scanne diesen Code, um die Finder-Seite zu öffnen.</p>
 
     <div id="indexQrCode"></div>
+
   </div>
 </div>
-
 <script src="index.js"></script>
 </body>
 </html>
