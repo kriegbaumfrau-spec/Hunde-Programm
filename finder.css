@@ -1,274 +1,430 @@
-/* HEADER (hellblauer Bereich oben) */
-.header {
-  background: #dbe6f1;
-  height: 220px;
-  position: relative;
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f7fb;
+  color: #111827;
+}
+
+.page {
+  max-width: 1200px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background: white;
 }
 
 
-/* Bild Position (mittig + halb unten) */
-.image-wrapper {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -30%);
+/* Navigation */
+.navbar {
+  height: 76px;
+  padding: 0 45px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: white;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.06);
 }
 
-
-
-
-/* Rundes Bild */
-.dog-img {
-  width: 120px;
-  border-radius: 50%;
-  object-fit: cover;  
-  display: block;
-  margin: 20px auto;
-  cursor: pointer;
-  transition: 0.3s;
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
-.dog-img:hover {
-  opacity: 0.8;
+.logo-icon {
+  font-size: 34px;
 }
 
-
-.info {
-  text-align: center;  
-  margin-top: 80px;    
-}
-
-
-.info h1 {
+.logo h1 {
   margin: 0;
   font-size: 28px;
+  letter-spacing: 0.5px;
+}
+
+.logo p {
+  margin: 2px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+nav .active {
+  color: #2563eb;
+  font-weight: bold;
+  border-bottom: 4px solid #2563eb;
+  padding: 27px 0;
+}
+
+
+/* Seite */
+.finder-page {
+  padding: 42px 45px 60px;
+
+  background:
+    radial-gradient(circle at 10% 30%, rgba(37,99,235,0.08), transparent 170px),
+    radial-gradient(circle at 90% 70%, rgba(37,99,235,0.10), transparent 220px),
+    linear-gradient(90deg, #ffffff 0%, #eef6ff 100%);
+}
+
+
+/* Hauptkarte */
+.finder-hero {
+  background: white;
+  border-radius: 28px;
+  padding: 34px;
+
+  display: flex;
+  align-items: center;
+  gap: 34px;
+
+  box-shadow: 0 12px 35px rgba(0,0,0,0.10);
+}
+
+.finder-image-box img {
+  width: 230px;
+  height: 230px;
+
+  object-fit: cover;
+  border-radius: 24px;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.16);
+}
+
+.finder-info {
+  flex: 1;
+}
+
+.label {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 7px 12px;
+
+  background: #dbeafe;
+  color: #1d4ed8;
+
+  border-radius: 999px;
+  font-size: 13px;
   font-weight: bold;
 }
 
+.finder-info h2 {
+  margin: 0 0 10px;
+  font-size: 44px;
+}
 
-/* Button bearbeiten*/
+.finder-info p {
+  margin: 8px 0;
+  color: #4b5563;
+  font-size: 17px;
+}
 
-.edit-btn {
-  width: 80%;
-  display: block;
-  margin: 20px auto;
-  padding: 12px;
-  border-radius: 12px;
-  border: none;
-  background: #e0e0e0;
+.note-box {
+  margin-top: 16px;
+  padding: 14px 16px;
+
+  background: #f9fafb;
+  border-radius: 14px;
+
+  color: #374151;
   font-size: 16px;
 }
 
 
+/* Standort */
+.main-location-btn {
+  margin-top: 22px;
+  padding: 15px 22px;
 
-/*Kacheln*/
-.note-text {
-  max-width: 340px;
-  margin: 15px auto 25px;
-  color: #7b7b8a;
+  border: none;
+  border-radius: 12px;
+
+  background: #2563eb;
+  color: white;
+
   font-size: 15px;
-  line-height: 1.4;
-  text-align: center;
+  font-weight: bold;
+
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(37,99,235,0.25);
 }
 
-.info-cards {
-  display: flex;
-  justify-content: center;
+.main-location-btn:hover {
+  background: #1d4ed8;
+}
+
+.location-options {
+  display: none;
+  margin-top: 14px;
   gap: 10px;
-  margin: 25px auto;
   flex-wrap: wrap;
 }
 
-.info-card {
-  width: 95px;
-  height: 75px;
-  border-radius: 16px;
-
+.location-options.show {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  font-size: 14px;
 }
 
-.info-card strong {
-  font-size: 16px;
-  font-weight: bold;
+.location-options button {
+  padding: 13px 18px;
 
-}
-
-.info-card span {
-  margin-top: 4px;
-  color: #666;
-  font-size: 13px;
-}
-
-.green-card {
-  background-color: #dff3c8;
-}
-
-.yellow-card {
-  background-color: #fff0c4;
-}
-
-.blue-card {
-  background-color: #cce8ff;
-}
-
-.purple-card {
-  background-color: #eadcff;
-}
-
-/*Location*/
-.location-actions {
-  width: 80%;
-  margin: 20px auto;
-  display: flex;
-  gap: 12px;
-}
-
-.location-btn {
-  flex: 1;
-  padding: 14px;
-  border-radius: 14px;
   border: none;
+  border-radius: 12px;
+
   color: white;
   font-size: 14px;
   font-weight: bold;
+
   cursor: pointer;
 }
 
 .whatsapp-btn {
-  background-color: #22c55e;
+  background: #22c55e;
 }
 
 .sms-btn {
-  background-color: #4aa3ff;
-}
-
-.send-location-box {
-  width: 80%;
-  margin: 25px auto;
-}
-
-.send-location-main {
-  width: 100%;
-  margin: 0;
-  padding: 15px 18px;
-  border: none;
-  border-radius: 14px;
   background: #4aa3ff;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
+}
+
+
+/* Statistik */
+.stats-grid {
+  margin-top: 24px;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.stat {
+  padding: 18px;
+  border-radius: 18px;
+  text-align: center;
+}
+
+.stat strong {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.stat span {
+  color: #4b5563;
+  font-size: 13px;
+}
+
+.green {
+  background: #dcfce7;
+}
+
+.yellow {
+  background: #fef3c7;
+}
+
+.blue {
+  background: #dbeafe;
+}
+
+.purple {
+  background: #ede9fe;
+}
+
+
+/* Untere Karten */
+.contact-section {
+  margin-top: 24px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.info-card {
+  background: white;
+  border-radius: 24px;
+  padding: 28px;
+
+  box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+}
+
+.info-card h3 {
+  margin: 0 0 8px;
+  font-size: 24px;
+}
+
+.card-subtitle {
+  margin: 0 0 20px;
+  color: #6b7280;
+  font-size: 15px;
+}
+
+
+/* Kontaktkarte */
+.contact-card {
+  background: #f1f7ff;
+  border-radius: 18px;
+  padding: 16px;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.send-icon {
-  border-left: 1px solid rgba(255,255,255,0.7);
-  padding-left: 16px;
-}
-
-.send-options {
-  display: none;
-  gap: 10px;
-  margin-top: 12px;
-}
-
-.send-options.show {
-  display: flex;
-}
-
-.option {
-  flex: 1;
-  margin: 0;
-  padding: 13px;
-  border: none;
-  border-radius: 12px;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.whatsapp-option {
-  background: #22c55e;
-}
-
-.sms-option {
-  background: #4aa3ff;
-}
-
-
-/*KOntakt*/
-.owner-contact-box {
-  width: 80%;
-  margin: 25px auto;
-}
-
-.owner-card {
-  background: #f1f7ff;
-  border-radius: 18px;
-  padding: 10px 12px;
-
+.contact-left {
   display: flex;
   align-items: center;
-  gap: 10px;
-
-  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  gap: 14px;
 }
 
-.owner-avatar {
-  width: 42px;
-  height: 42px;
+.contact-avatar {
+  width: 48px;
+  height: 48px;
+
+  background: #2563eb;
+  color: white;
+
   border-radius: 50%;
-  background: #4aa3ff;
-  color: white;
 
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 
   font-weight: bold;
-  font-size: 18px;
+  font-size: 20px;
 }
 
-.owner-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+.contact-text strong {
+  display: block;
+  margin-bottom: 4px;
 }
 
-.owner-info strong {
-  font-size: 15px;
-  color: #111827;
-  font-weight: bold;
-  line-height: 1.1;
-}
-
-.owner-info span {
-  margin-top: 3px;
+.contact-text span {
   color: #6b7280;
-  font-size: 13px;
+  font-size: 14px;
 }
 
-.owner-call-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
+.call-btn {
+  width: 46px;
+  height: 46px;
+
   background: #22c55e;
   color: white;
+
+  border-radius: 14px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   text-decoration: none;
+  font-size: 20px;
+}
+
+
+/* Hilfe */
+.help-steps {
+  display: grid;
+  gap: 14px;
+}
+
+.help-steps div {
+  padding: 16px;
+  border-radius: 16px;
+
+  background: #f9fafb;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.help-steps strong {
+  width: 34px;
+  height: 34px;
+
+  background: #2563eb;
+  color: white;
+
+  border-radius: 50%;
 
   display: flex;
   align-items: center;
   justify-content: center;
+}
 
-  font-size: 26px;
+.help-steps span {
   font-weight: bold;
-  line-height: 1;
+}
+
+
+/* Tablet */
+@media (max-width: 950px) {
+  .navbar {
+    height: auto;
+    padding: 20px;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .finder-hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .contact-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Handy */
+@media (max-width: 600px) {
+  .finder-page {
+    padding: 26px 18px 40px;
+  }
+
+  .finder-hero {
+    padding: 24px 18px;
+  }
+
+  .finder-image-box img {
+    width: 170px;
+    height: 170px;
+  }
+
+  .finder-info h2 {
+    font-size: 34px;
+  }
+
+  .main-location-btn {
+    width: 100%;
+  }
+
+  .location-options {
+    flex-direction: column;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .info-card {
+    padding: 22px 18px;
+  }
+
+  .contact-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .call-btn {
+    align-self: flex-end;
+  }
 }
