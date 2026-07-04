@@ -573,3 +573,61 @@ footer {
 .qr-close:hover {
   background: #dbeafe;
 }
+
+/* Drucksymbol links, X rechts im QR-Popup */
+.qr-modal-top {
+  position: static;
+}
+
+.qr-print-icon {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+
+  width: 34px;
+  height: 34px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #eef2f7;
+  color: #111827;
+
+  font-size: 18px;
+  line-height: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+}
+
+.qr-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+
+  width: 34px;
+  height: 34px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #eef2f7;
+  color: #111827;
+
+  font-size: 24px;
+  line-height: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+}
+
+.qr-print-icon:hover,
+.qr-close:hover {
+  background: #dbeafe;
+}
